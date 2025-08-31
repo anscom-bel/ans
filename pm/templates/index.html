@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #151515;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3 {
+            color: white;
+        }
+
+        .card {
+            background-color: #2a2a2a;
+            padding: 2.5rem;
+            border-radius: 10px;
+            margin-bottom: 2.5rem;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            transition: text-decoration 0.3s;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .navbar a {
+            color: white;
+            font-weight: 500;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            background-color: #151515;
+            padding: 1.5rem 2rem;
+            z-index: 20;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .footer {
+            background-color: #151515;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer h3 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer ul li a {
+            color: white;
+        }
+
+        .copyright {
+            background-color: #151515;
+            text-align: center;
+            padding: 1rem 2rem;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+        
+        .hamburger div {
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .hamburger.active .bar-top {
+            transform: translateY(4px) rotate(45deg);
+        }
+
+        .hamburger.active .bar-bottom {
+            transform: translateY(-4px) rotate(-45deg);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                display: none;
+                flex-direction: column;
+                gap: 10px;
+                background-color: #151515;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                width: 100%;
+                padding: 20px;
+                border-radius: 0;
+                z-index: 10;
+                border-bottom: 1px solid #2a2a2a;
+                transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            .navbar.active {
+                display: flex;
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <header>
+        <div class="flex items-center gap-4">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="h-12">
+            <h1 class="text-2xl text-white">Password Manager</h1>
+        </div>
+        <nav class="navbar md:flex">
+            <a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a>
+            <a href="{{ url_for('add_password') }}"><i class="fas fa-plus"></i> Add Password</a>
+            <a href="{{ url_for('view_passwords') }}"><i class="fas fa-eye"></i> View Passwords</a>
+            <a href="{{ url_for('generate_password') }}"><i class="fas fa-key"></i> Generate Password</a>
+        </nav>
+        <button class="md:hidden text-white focus:outline-none" id="menu-button">
+            <div class="hamburger">
+                <div class="bar-top"></div>
+                <div class="bar-bottom"></div>
+            </div>
+        </button>
+    </header>
+    
+    <div class="container mx-auto p-5 flex-grow">
+        <h1 class="text-3xl text-white mb-8 text-center">Your Ultimate Password Security Solution</h1>
+
+        <div class="card">
+            <h2 class="text-2xl text-white mb-6 text-center">Why Use Password Manager?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="p-4 flex flex-col items-center">
+                    <i class="fas fa-shield-alt text-4xl text-white mb-4"></i>
+                    <h3 class="font-bold text-xl mb-2 text-white">Unbreakable Security</h3>
+                    <p class="text-white">Your passwords are encrypted with the latest security protocols, ensuring your data is always safe.</p>
+                </div>
+                <div class="p-4 flex flex-col items-center">
+                    <i class="fas fa-magic text-4xl text-white mb-4"></i>
+                    <h3 class="font-bold text-xl mb-2 text-white">Effortless Generation</h3>
+                    <p class="text-white">Create complex, unique passwords with a single click. Say goodbye to weak passwords forever.</p>
+                </div>
+                <div class="p-4 flex flex-col items-center">
+                    <i class="fas fa-lock text-4xl text-white mb-4"></i>
+                    <h3 class="font-bold text-xl mb-2 text-white">Complete Control</h3>
+                    <p class="text-white">Easily view, edit, or delete your passwords at any time from one centralized dashboard.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="text-2xl text-white mb-6 text-center">What Our Users Say</h2>
+            <div class="space-y-6">
+                <div class="p-4 bg-gray-700 rounded-lg shadow-md">
+                    <p class="italic text-white">"I used to write my passwords on sticky notes. This service changed everything. It's so easy and secure!"</p>
+                    <p class="text-sm text-gray-300 mt-2">- Alex R.</p>
+                </div>
+                <div class="p-4 bg-gray-700 rounded-lg shadow-md">
+                    <p class="italic text-white">"The password generator is a game-changer. I feel much safer online now."</p>
+                    <p class="text-sm text-gray-300 mt-2">- Jamie L.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <h2 class="text-2xl text-white mb-4">Ready to Secure Your Digital Life?</h2>
+            <p class="text-lg mb-6 text-white">Start managing your passwords with confidence today.</p>
+            <a href="{{ url_for('add_password') }}" class="inline-block bg-white text-black font-bold py-3 px-6 rounded-full hover:bg-gray-200 transition-colors duration-300">
+                Get Started
+            </a>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 footer-grid">
+            <div>
+                <h3 class="font-bold">Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold">Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Security</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold">Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold">Social</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-twitter mr-2"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-linkedin mr-2"></i> LinkedIn</a></li>
+                    <li><a href="#"><i class="fab fa-github mr-2"></i> GitHub</a></li>
+                    <li><a href="#"><i class="fab fa-youtube mr-2"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p class="text-white">&copy; 2025 ANSCOM. All rights reserved. This product and its content are protected by copyright and intellectual property laws. Unauthorized reproduction or distribution is strictly prohibited. The "Password Manager" name and logo are trademarks of ANSCOM.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const navbar = document.querySelector('.navbar');
+            const hamburger = document.querySelector('.hamburger');
+            navbar.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
