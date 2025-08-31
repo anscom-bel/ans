@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANSCOM</title>
+    <!--
+      The "Inter" font provides a modern, clean look for the interface.
+    -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <!--
+      Tailwind CSS is used for responsive, utility-first styling.
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--
+      Font Awesome is used for the security and navigation icons.
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #151515;
+            --text-color: white;
+            --accent-color: #46a5ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Set the accent color for specific elements */
+        h1, h2, h3 {
+            color: var(--accent-color);
+            transition: color 0.3s ease-in-out;
+        }
+
+        /* All links will now have an underline on hover */
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .card {
+            background-color: #242424;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            border: 1px solid #333;
+        }
+        
+        /* Custom CSS for hamburger animation */
+        .hamburger div {
+            background-color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.open div:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.open div:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .hamburger.open div:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Mobile menu specific styles */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header with logo, title, and navigation -->
+    <header class="flex justify-between items-center p-5 bg-[var(--bg-color)] relative z-40">
+        <div class="flex items-center gap-4">
+            <img src="/static/images/logo.png" alt="ANSCOM Logo" class="h-12 w-12 rounded-full" />
+            <h1 class="text-2xl font-bold text-[var(--accent-color)]">ANSCOM</h1>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex gap-8 items-center text-sm font-medium">
+            <a href="#home" class="hover:underline transition-colors no-underline nav-link"><i class="fas fa-home mr-2"></i>Home</a>
+            <a href="#services" class="hover:underline transition-colors no-underline nav-link"><i class="fas fa-handshake mr-2"></i>Services</a>
+            <a href="#about" class="hover:underline transition-colors no-underline nav-link"><i class="fas fa-info-circle mr-2"></i>About</a>
+            <a href="#cases" class="hover:underline transition-colors no-underline nav-link"><i class="fas fa-folder-open mr-2"></i>Case Studies</a>
+            <a href="#insights" class="hover:underline transition-colors no-underline nav-link"><i class="fas fa-lightbulb mr-2"></i>Insights</a>
+            <a href="#contact" class="hover:underline transition-colors no-underline nav-link"><i class="fas fa-envelope mr-2"></i>Contact</a>
+        </nav>
+        
+        <!-- Mobile Hamburger Menu Button -->
+        <button class="md:hidden text-white focus:outline-none z-50" id="menu-button">
+            <div class="hamburger flex flex-col gap-1 w-6">
+                <div class="h-1 rounded-full"></div>
+                <div class="h-1 rounded-full"></div>
+            </div>
+        </button>
+    </header>
+
+    <!-- Full-screen Mobile Menu with animation -->
+    <nav id="mobile-menu" class="mobile-menu fixed inset-0 z-30 transform translate-x-full bg-[var(--bg-color)] flex flex-col justify-center items-center p-5">
+        <a href="#home" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Home</a>
+        <a href="#services" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Services</a>
+        <a href="#about" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">About</a>
+        <a href="#cases" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Case Studies</a>
+        <a href="#insights" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Insights</a>
+        <a href="#contact" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Contact</a>
+    </nav>
+
+    <!-- Main Content Container with multiple pages -->
+    <main class="container mx-auto p-5 flex-grow relative z-10">
+        <!-- Home Section (Page) -->
+        <section id="home" class="page active-page text-center py-16 px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Proactive Security for a Resilient Digital Future</h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                Go beyond basic security. We provide expert-led services and innovative solutions to fortify your business against evolving cyber threats.
+            </p>
+            <a href="#services" class="inline-block bg-[var(--accent-color)] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300 no-underline nav-link">
+                View Our Services
+            </a>
+            
+            <hr class="my-16 border-gray-700 w-1/2 mx-auto" />
+
+            <!-- Why Choose Us -->
+            <div class="mt-16 text-left">
+                <h2 class="text-3xl font-bold text-center mb-8">Why Choose ANSCOM?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="card p-6">
+                        <i class="fas fa-shield-alt text-4xl text-[var(--accent-color)] mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2 text-white">Expert-Led Solutions</h3>
+                        <p class="text-gray-400">Our team consists of certified security professionals with deep expertise in web application security.</p>
+                    </div>
+                    <div class="card p-6">
+                        <i class="fas fa-tachometer-alt text-4xl text-[var(--accent-color)] mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2 text-white">Actionable Insights</h3>
+                        <p class="text-gray-400">We don't just find problems; we provide clear, actionable steps to fix them and improve your security posture.</p>
+                    </div>
+                    <div class="card p-6">
+                        <i class="fas fa-handshake text-4xl text-[var(--accent-color)] mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2 text-white">Client-First Approach</h3>
+                        <p class="text-gray-400">We work as a partner, offering customized solutions and dedicated support tailored to your unique business needs.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-16 border-gray-700 w-1/2 mx-auto" />
+
+            <!-- What Our Clients Say -->
+            <div class="mt-16 text-center">
+                <h2 class="text-3xl font-bold mb-8">What Our Clients Say</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card p-6">
+                        <p class="text-gray-400 italic mb-4">"ANSCOM's team was incredible. They identified critical vulnerabilities we didn't know we had and provided clear guidance to fix them."</p>
+                        <p class="font-semibold text-white">- Jane Doe, CEO of TechCorp</p>
+                    </div>
+                    <div class="card p-6">
+                        <p class="text-gray-400 italic mb-4">"The Professional Audit was thorough and the report was easy to understand. We now have a much stronger security foundation."</p>
+                        <p class="font-semibold text-white">- John Smith, CTO of Innovate Inc.</p>
+                    </div>
+                    <div class="card p-6">
+                        <p class="text-gray-400 italic mb-4">"Their continuous monitoring service gives us peace of mind. We know our systems are protected 24/7."</p>
+                        <p class="font-semibold text-white">- Sarah Lee, Head of Security at Global Solutions</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section (Page) -->
+        <section id="services" class="page hidden max-w-5xl mx-auto mb-16">
+            <h2 class="text-3xl text-center font-bold mb-12">Our Security Service Packages</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <!-- Basic Scan Plan -->
+                <div class="card p-8 flex flex-col items-center">
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Basic Scan</h3>
+                    <div class="mb-6">
+                        <span class="text-4xl font-extrabold text-[var(--accent-color)]">$49</span>
+                        <span class="text-sm text-gray-400">/scan</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-3 text-left text-gray-400 flex-grow">
+                        <li>Automated vulnerability detection</li>
+                        <li>Non-intrusive port scanning</li>
+                        <li>Basic risk report summary</li>
+                        <li>One-time security snapshot</li>
+                    </ul>
+                    <a href="#contact" class="mt-8 w-full bg-[var(--accent-color)] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300 no-underline nav-link">
+                        Choose Plan
+                    </a>
+                </div>
+
+                <!-- Professional Audit Plan -->
+                <div class="card p-8 flex flex-col items-center border-2 border-[var(--accent-color)]">
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Professional Audit</h3>
+                    <div class="mb-6">
+                        <span class="text-4xl font-extrabold text-[var(--accent-color)]">$299</span>
+                        <span class="text-sm text-gray-400">/project</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-3 text-left text-gray-400 flex-grow">
+                        <li>Comprehensive vulnerability assessment</li>
+                        <li>In-depth penetration testing</li>
+                        <li>Detailed risk report with recommendations</li>
+                        <li>Follow-up consultation with a security expert</li>
+                    </ul>
+                    <a href="#contact" class="mt-8 w-full bg-[var(--accent-color)] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300 no-underline nav-link">
+                        Choose Plan
+                    </a>
+                </div>
+
+                <!-- Enterprise Security Plan -->
+                <div class="card p-8 flex flex-col items-center">
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Enterprise Security</h3>
+                    <div class="mb-6">
+                        <span class="text-4xl font-extrabold text-[var(--accent-color)]">Custom</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-3 text-left text-gray-400 flex-grow">
+                        <li>Tailored security solution</li>
+                        <li>Continuous monitoring and threat detection</li>
+                        <li>Dedicated security analyst team</li>
+                        <li>Regular security posture assessments</li>
+                    </ul>
+                    <a href="#contact" class="mt-8 w-full bg-[var(--accent-color)] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300 no-underline nav-link">
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section (Page) -->
+        <section id="about" class="page hidden card">
+            <h2 class="text-3xl text-center font-bold mb-8">About Our Mission</h2>
+            <p class="text-gray-400 mb-8 text-center max-w-2xl mx-auto">
+                ANSCOM is a team of dedicated security professionals committed to making the digital world safer for everyone. We believe that proactive security is a necessity, not an option. Our mission is to provide businesses of all sizes with the expert tools and guidance they need to build secure and resilient web applications. We work tirelessly to stay ahead of emerging threats and deliver peace of mind to our clients.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+                <div class="p-4 rounded-lg">
+                    <i class="fas fa-users-cog text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-xl font-semibold text-white mb-2">Expert Team</h3>
+                    <p class="text-gray-400">Our team consists of certified security analysts and ethical hackers with years of experience protecting high-profile web applications.</p>
+                </div>
+                <div class="p-4 rounded-lg">
+                    <i class="fas fa-lightbulb text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-xl font-semibold text-white mb-2">Innovative Approach</h3>
+                    <p class="text-gray-400">We leverage the latest techniques and intelligence to provide comprehensive security assessments that go beyond automated tools.</p>
+                </div>
+                <div class="p-4 rounded-lg">
+                    <i class="fas fa-hand-holding-heart text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-xl font-semibold text-white mb-2">Client-Focused</h3>
+                    <p class="text-gray-400">Your security is our priority. We work closely with you to understand your needs and deliver a service that provides maximum value and protection.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Case Studies Section (Page) -->
+        <section id="cases" class="page hidden card max-w-5xl mx-auto mb-16">
+            <h2 class="text-3xl text-center font-bold mb-12">Success Stories</h2>
+            <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">
+                Discover how we've helped our clients secure their digital assets and achieve peace of mind.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Case Study 1 -->
+                <div class="card p-6 flex flex-col items-start">
+                    <h3 class="text-2xl font-semibold mb-2 text-white">E-commerce Platform Security Hardening</h3>
+                    <p class="text-sm text-gray-400 mb-4">**Client:** Global Retail Inc.</p>
+                    <p class="text-gray-400 flex-grow">
+                        Global Retail Inc. needed a thorough security audit of their new e-commerce platform before launch. We conducted a full penetration test, identifying and helping them patch several critical vulnerabilities, ensuring a secure launch and protecting customer data.
+                    </p>
+                    <a href="#" class="mt-4 text-[var(--accent-color)] font-medium hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+                <!-- Case Study 2 -->
+                <div class="card p-6 flex flex-col items-start">
+                    <h3 class="text-2xl font-semibold mb-2 text-white">FinTech App Compliance & Audit</h3>
+                    <p class="text-sm text-gray-400 mb-4">**Client:** SecurePay Solutions</p>
+                    <p class="text-gray-400 flex-grow">
+                        SecurePay, a fast-growing FinTech startup, required a comprehensive security audit to meet strict industry compliance standards. Our team provided continuous monitoring and regular assessments, helping them maintain their security posture and meet all regulatory requirements.
+                    </p>
+                    <a href="#" class="mt-4 text-[var(--accent-color)] font-medium hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Insights Section (Page) -->
+        <section id="insights" class="page hidden card max-w-5xl mx-auto mb-16">
+            <h2 class="text-3xl text-center font-bold mb-12">Latest Insights</h2>
+            <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">
+                Stay up to date with the latest trends and best practices in cybersecurity with articles written by our expert team.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div class="card p-6">
+                    <img src="https://placehold.co/400x250/242424/ffffff?text=Vulnerability+Scan" alt="Blog Post Image" class="rounded-lg mb-4" />
+                    <h3 class="text-xl font-semibold mb-2 text-white">The Top 5 Web App Vulnerabilities of 2024</h3>
+                    <p class="text-gray-400 text-sm mb-4">By Alex Chen | October 26, 2024</p>
+                    <p class="text-gray-400 flex-grow">
+                        An overview of the most common and dangerous vulnerabilities facing web applications today, and how to defend against them.
+                    </p>
+                    <a href="#" class="mt-4 inline-block text-[var(--accent-color)] font-medium hover:underline">Read Article <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+                <!-- Blog Post 2 -->
+                <div class="card p-6">
+                    <img src="https://placehold.co/400x250/242424/ffffff?text=API+Security" alt="Blog Post Image" class="rounded-lg mb-4" />
+                    <h3 class="text-xl font-semibold mb-2 text-white">Securing Your APIs: A Developer's Guide</h3>
+                    <p class="text-gray-400 text-sm mb-4">By Maria Rodriguez | October 15, 2024</p>
+                    <p class="text-gray-400 flex-grow">
+                        APIs are the backbone of modern web services. Learn how to protect them from common attacks with our detailed guide.
+                    </p>
+                    <a href="#" class="mt-4 inline-block text-[var(--accent-color)] font-medium hover:underline">Read Article <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+                <!-- Blog Post 3 -->
+                <div class="card p-6">
+                    <img src="https://placehold.co/400x250/242424/ffffff?text=Threat+Intelligence" alt="Blog Post Image" class="rounded-lg mb-4" />
+                    <h3 class="text-xl font-semibold mb-2 text-white">The Role of AI in Proactive Threat Detection</h3>
+                    <p class="text-gray-400 text-sm mb-4">By David Wilson | September 30, 2024</p>
+                    <p class="text-gray-400 flex-grow">
+                        Explore how artificial intelligence and machine learning are revolutionizing the way we identify and respond to cyber threats.
+                    </p>
+                    <a href="#" class="mt-4 inline-block text-[var(--accent-color)] font-medium hover:underline">Read Article <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section (Page) -->
+        <section id="contact" class="page hidden card max-w-2xl mx-auto">
+            <h2 class="text-3xl text-center font-bold mb-8">Inquire About Our Services</h2>
+            <p class="text-center text-gray-400 mb-8">
+                Ready to secure your website? Fill out the form below to get in touch with our sales team and discuss your security needs.
+            </p>
+            <form class="space-y-6">
+                <div>
+                    <label for="name" class="block text-gray-400 text-sm font-medium mb-2">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe" class="w-full px-5 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]">
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-400 text-sm font-medium mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" class="w-full px-5 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]">
+                </div>
+                <div>
+                    <label for="message" class="block text-gray-400 text-sm font-medium mb-2">Message</label>
+                    <textarea id="message" name="message" rows="4" placeholder="I am interested in the Professional Audit package for my company's website..." class="w-full px-5 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="w-full bg-[var(--accent-color)] text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300">
+                        <i class="fas fa-paper-plane mr-2"></i> Send Message
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+    
+    <!-- Footer with four columns and long copyright text -->
+    <footer class="bg-[var(--bg-color)] text-gray-400 pt-16 pb-8 border-t border-[#333]">
+        <div class="container mx-auto px-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <!-- Column 1: Company -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[var(--accent-color)]">ANSCOM</h3>
+                    <p class="text-sm">We provide world-class tools to help you secure your web applications, ensuring a safer and more reliable online experience for you and your users. Our commitment is to innovation and data integrity.</p>
+                </div>
+                <!-- Column 2: Resources -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-white">Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#services" class="hover:underline transition-colors no-underline nav-link">Basic Scan</a></li>
+                        <li><a href="#services" class="hover:underline transition-colors no-underline nav-link">Professional Audit</a></li>
+                        <li><a href="#services" class="hover:underline transition-colors no-underline nav-link">Enterprise Security</a></li>
+                        <li><a href="#contact" class="hover:underline transition-colors no-underline nav-link">Custom Solutions</a></li>
+                    </ul>
+                </div>
+                <!-- Column 3: Legal & Support -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-white">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="hover:underline transition-colors no-underline nav-link">About Us</a></li>
+                        <li><a href="#cases" class="hover:underline transition-colors no-underline nav-link">Case Studies</a></li>
+                        <li><a href="#insights" class="hover:underline transition-colors no-underline nav-link">Insights</a></li>
+                        <li><a href="#contact" class="hover:underline transition-colors no-underline nav-link">Contact</a></li>
+                    </ul>
+                </div>
+                <!-- Column 4: Social Media -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-white">Connect</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:underline transition-colors no-underline"><i class="fab fa-twitter mr-2"></i> Twitter</a></li>
+                        <li><a href="#" class="hover:underline transition-colors no-underline"><i class="fab fa-linkedin mr-2"></i> LinkedIn</a></li>
+                        <li><a href="#" class="hover:underline transition-colors no-underline"><i class="fab fa-github mr-2"></i> GitHub</a></li>
+                        <li><a href="#" class="hover:underline transition-colors no-underline"><i class="fab fa-discord mr-2"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-6 border-t border-[#333] text-sm text-center">
+                <p>&copy; 2025 ANSCOM. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript for dynamic functionality -->
+    <script>
+        // Get all navigation links, hamburger button, and page sections
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.querySelector('.hamburger');
+
+        // Function to show the correct page based on the hash
+        function showPageFromHash() {
+            const hash = window.location.hash || '#home';
+            pages.forEach(page => {
+                if ('#' + page.id === hash) {
+                    page.classList.remove('hidden');
+                    page.classList.add('active-page');
+                } else {
+                    page.classList.add('hidden');
+                    page.classList.remove('active-page');
+                }
+            });
+        }
+
+        // Function to close the mobile menu
+        function closeMenu() {
+            mobileMenu.classList.add('translate-x-full');
+            hamburger.classList.remove('open');
+        }
+
+        // Handle navigation link clicks
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                // Manually handle the URL hash change
+                window.location.hash = this.getAttribute('href');
+                // Close mobile menu after a click
+                if (window.innerWidth < 768) {
+                    closeMenu();
+                }
+            });
+        });
+
+        // Toggle mobile navigation with animation
+        menuButton.addEventListener('click', function() {
+            const isOpen = !mobileMenu.classList.contains('translate-x-full');
+            if (isOpen) {
+                closeMenu();
+            } else {
+                mobileMenu.classList.remove('translate-x-full');
+                hamburger.classList.add('open');
+            }
+        });
+        
+        // Initial page load based on URL hash
+        window.addEventListener('load', showPageFromHash);
+        window.addEventListener('hashchange', showPageFromHash);
+    </script>
+</body>
+</html>
