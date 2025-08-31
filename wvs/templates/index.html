@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANSCOM Web Vulnerability Scanner</title>
+    <!--
+      The "Inter" font provides a modern, clean look for the interface.
+    -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <!--
+      Tailwind CSS is used for responsive, utility-first styling.
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--
+      Font Awesome is used for the security and navigation icons.
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #151515;
+            --text-color: white;
+            --accent-color: #46a5ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Set the accent color for specific elements */
+        h1, h2, h3, a {
+            color: var(--accent-color);
+            transition: color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            color: #6fb0ff;
+        }
+
+        .card {
+            background-color: #242424;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            border: 1px solid #333;
+        }
+        
+        /* Custom CSS for hamburger animation */
+        .hamburger div {
+            background-color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.open div:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.open div:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .hamburger.open div:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Mobile menu specific styles */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header with logo, title, and navigation -->
+    <header class="flex justify-between items-center p-5 bg-[var(--bg-color)] relative z-40">
+        <div class="flex items-center gap-4">
+            <!-- Replace the placeholder URL below with the URL of your own logo -->
+            <img src="/static/images/logo.png" alt="ANSCOM Logo" class="h-12 w-12 rounded-full" />
+            <h1 class="text-2xl font-bold text-[var(--accent-color)]">ANSCOM Scanner</h1>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex gap-8 items-center text-sm font-medium">
+            <a href="#home" class="hover:underline transition-colors nav-link"><i class="fas fa-home mr-2"></i>Home</a>
+            <a href="#scan" class="hover:underline transition-colors nav-link"><i class="fas fa-search mr-2"></i>Scan Now</a>
+            <a href="#about" class="hover:underline transition-colors nav-link"><i class="fas fa-info-circle mr-2"></i>About</a>
+            <a href="#contact" class="hover:underline transition-colors nav-link"><i class="fas fa-envelope mr-2"></i>Contact</a>
+        </nav>
+        
+        <!-- Mobile Hamburger Menu Button -->
+        <button class="md:hidden text-white focus:outline-none z-50" id="menu-button">
+            <div class="hamburger flex flex-col gap-1 w-6">
+                <div class="h-1 rounded-full"></div>
+                <div class="h-1 rounded-full"></div>
+            </div>
+        </button>
+    </header>
+
+    <!-- Full-screen Mobile Menu with animation -->
+    <nav id="mobile-menu" class="mobile-menu fixed inset-0 z-30 transform translate-x-full bg-[var(--bg-color)] flex flex-col justify-center items-center p-5">
+        <a href="#home" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Home</a>
+        <a href="#scan" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Scan Now</a>
+        <a href="#about" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">About</a>
+        <a href="#contact" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Contact</a>
+    </nav>
+
+    <!-- Main Content Container with multiple pages -->
+    <main class="container mx-auto p-5 flex-grow relative z-10">
+        <!-- Home Section (Page) -->
+        <section id="home" class="page active-page text-center py-16 px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Secure Your Website with Confidence</h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                Discover and fix security vulnerabilities before they become a problem. Our scanner provides fast, comprehensive analysis of your web application.
+            </p>
+            <a href="#scan" class="inline-block bg-[var(--accent-color)] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300 nav-link">
+                Start a Free Scan
+            </a>
+        </section>
+
+        <!-- Scan Section (Page) -->
+        <section id="scan" class="page hidden card max-w-2xl mx-auto mb-16">
+            <h2 class="text-3xl text-center font-bold mb-6">Scan a Website</h2>
+            <p class="text-center text-gray-400 mb-8">Enter the URL of the website you wish to scan. Our system will run a series of non-intrusive tests to identify potential security flaws.</p>
+            <form id="scan-form" class="space-y-6">
+                <div>
+                    <label for="url-input" class="block text-gray-400 text-sm font-medium mb-2">Website URL</label>
+                    <input type="url" id="url-input" name="url" placeholder="https://www.example.com" required class="w-full px-5 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="w-full bg-[var(--accent-color)] text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300">
+                        <i class="fas fa-search mr-2"></i> Run Scan
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" class="hidden text-center mt-8">
+                <i class="fas fa-circle-notch fa-spin text-4xl text-[var(--accent-color)]"></i>
+                <p class="mt-4 text-gray-400 font-medium">Scanning in progress... Please wait.</p>
+            </div>
+            
+            <!-- Scan Results Section -->
+            <div id="scan-results" class="hidden mt-10"></div>
+        </section>
+
+        <!-- About Section (Page) -->
+        <section id="about" class="page hidden card">
+            <h2 class="text-3xl text-center font-bold mb-8">About ANSCOM Scanner</h2>
+            <p class="text-gray-400 mb-8 text-center max-w-2xl mx-auto">
+                ANSCOM is a cutting-edge web vulnerability scanner designed to help developers and website owners identify and mitigate security risks. Our mission is to make web security accessible and actionable for everyone. We use a combination of known signature checks and heuristic analysis to provide a comprehensive overview of your website's security posture.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+                <div class="p-4 rounded-lg">
+                    <i class="fas fa-fingerprint text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-xl font-semibold text-white mb-2">Automated Checks</h3>
+                    <p class="text-gray-400">Our system performs a series of automated, non-intrusive checks to identify a wide range of common vulnerabilities.</p>
+                </div>
+                <div class="p-4 rounded-lg">
+                    <i class="fas fa-clipboard-list text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-xl font-semibold text-white mb-2">Detailed Reporting</h3>
+                    <p class="text-gray-400">We provide a clear, easy-to-read report that highlights potential risks and their severity, so you know exactly where to focus.</p>
+                </div>
+                <div class="p-4 rounded-lg">
+                    <i class="fas fa-chart-line text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-xl font-semibold text-white mb-2">Actionable Insights</h3>
+                    <p class="text-gray-400">For each vulnerability found, our report offers clear recommendations and insights to help you secure your website effectively.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section (Page) -->
+        <section id="contact" class="page hidden card max-w-2xl mx-auto">
+            <h2 class="text-3xl text-center font-bold mb-8">Contact Us</h2>
+            <p class="text-center text-gray-400 mb-8">
+                Have questions or feedback? Feel free to reach out to us. We're here to help.
+            </p>
+            <form class="space-y-6">
+                <div>
+                    <label for="name" class="block text-gray-400 text-sm font-medium mb-2">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe" class="w-full px-5 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]">
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-400 text-sm font-medium mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" class="w-full px-5 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]">
+                </div>
+                <div>
+                    <label for="message" class="block text-gray-400 text-sm font-medium mb-2">Message</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Your message here..." class="w-full px-5 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="w-full bg-[var(--accent-color)] text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300">
+                        <i class="fas fa-paper-plane mr-2"></i> Send Message
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+    
+    <!-- Footer with four columns and long copyright text -->
+    <footer class="bg-[var(--bg-color)] text-gray-400 pt-16 pb-8 border-t border-[#333]">
+        <div class="container mx-auto px-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <!-- Column 1: Company -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-[var(--accent-color)]">ANSCOM</h3>
+                    <p class="text-sm">We provide world-class tools to help you secure your web applications, ensuring a safer and more reliable online experience for you and your users. Our commitment is to innovation and data integrity.</p>
+                </div>
+                <!-- Column 2: Resources -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-white">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="doc" class="hover:underline transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:underline transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="hover:underline transition-colors">Case Studies</a></li>
+                        <li><a href="#" class="hover:underline transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <!-- Column 3: Legal & Support -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-white">Legal & Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:underline transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:underline transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:underline transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:underline transition-colors">Report a Bug</a></li>
+                    </ul>
+                </div>
+                <!-- Column 4: Social Media -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-white">Connect</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:underline transition-colors"><i class="fab fa-twitter mr-2"></i> Twitter</a></li>
+                        <li><a href="#" class="hover:underline transition-colors"><i class="fab fa-linkedin mr-2"></i> LinkedIn</a></li>
+                        <li><a href="#" class="hover:underline transition-colors"><i class="fab fa-github mr-2"></i> GitHub</a></li>
+                        <li><a href="#" class="hover:underline transition-colors"><i class="fab fa-discord mr-2"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-6 border-t border-[#333] text-sm text-center">
+                <p>&copy; 2025 ANSCOM. All rights reserved. The ANSCOM name, logo, and all related product names, design marks, and slogans are the trademarks or registered trademarks of ANSCOM. Unauthorized use is strictly prohibited. This platform is for informational and educational purposes only. Any security findings generated are for reference and should be verified by a professional security expert. We are not responsible for any actions taken based on the results of our scanner.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript for dynamic functionality -->
+    <script>
+        // Get all navigation links, hamburger button, and page sections
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.querySelector('.hamburger');
+
+        // Function to show the correct page based on the hash
+        function showPageFromHash() {
+            const hash = window.location.hash || '#home';
+            pages.forEach(page => {
+                if ('#' + page.id === hash) {
+                    page.classList.remove('hidden');
+                    page.classList.add('active-page');
+                } else {
+                    page.classList.add('hidden');
+                    page.classList.remove('active-page');
+                }
+            });
+        }
+
+        // Function to close the mobile menu
+        function closeMenu() {
+            mobileMenu.classList.add('translate-x-full');
+            hamburger.classList.remove('open');
+        }
+
+        // Handle navigation link clicks
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                // Manually handle the URL hash change
+                window.location.hash = this.getAttribute('href');
+                // Close mobile menu after a click
+                if (window.innerWidth < 768) {
+                    closeMenu();
+                }
+            });
+        });
+
+        // Toggle mobile navigation with animation
+        menuButton.addEventListener('click', function() {
+            const isOpen = !mobileMenu.classList.contains('translate-x-full');
+            if (isOpen) {
+                closeMenu();
+            } else {
+                mobileMenu.classList.remove('translate-x-full');
+                hamburger.classList.add('open');
+            }
+        });
+
+        // Handle the form submission and simulate the scan
+        document.getElementById('scan-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            const url = document.getElementById('url-input').value;
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const scanResults = document.getElementById('scan-results');
+
+            // Show loading state and hide previous results
+            loadingIndicator.classList.remove('hidden');
+            scanResults.classList.add('hidden');
+            scanResults.innerHTML = '';
+
+            // Simulate network delay for a more realistic user experience
+            setTimeout(() => {
+                loadingIndicator.classList.add('hidden');
+                
+                // Simulate a random scan result
+                const isVulnerable = Math.random() < 0.6; // 60% chance of being vulnerable
+                let status, vulnerabilities = [];
+
+                if (isVulnerable) {
+                    status = 'Vulnerable';
+                    const allVulnerabilities = [
+                        'Cross-Site Scripting (XSS)', 
+                        'SQL Injection', 
+                        'Cross-Site Request Forgery (CSRF)', 
+                        'Broken Authentication', 
+                        'Sensitive Data Exposure',
+                        'Insecure Direct Object References',
+                        'Server-Side Request Forgery (SSRF)',
+                        'XML External Entities (XXE)',
+                        'Insecure Deserialization'
+                    ];
+                    // Select a random number of vulnerabilities
+                    const numVulnerabilities = Math.floor(Math.random() * (allVulnerabilities.length - 1)) + 1;
+                    vulnerabilities = allVulnerabilities.sort(() => 0.5 - Math.random()).slice(0, numVulnerabilities);
+                } else {
+                    status = 'Secure';
+                }
+
+                // Render the results HTML
+                let resultHTML = `
+                    <h3 class="text-xl font-bold mb-4 text-white">Scan Report for <span class="text-[var(--accent-color)] break-all">${url}</span></h3>
+                    <div class="p-6 rounded-xl border border-[#333] shadow-md ${status === 'Vulnerable' ? 'bg-red-900/20' : 'bg-green-900/20'}">
+                `;
+                const scanDate = new Date().toLocaleString();
+                
+                if (status === 'Vulnerable') {
+                    resultHTML += `
+                        <p class="text-red-500 text-lg font-bold mb-4"><i class="fas fa-exclamation-triangle mr-2"></i>Status: ${status}</p>
+                        <p class="text-sm text-gray-400 mb-4">Scan Date: ${scanDate}</p>
+                        <h4 class="text-lg font-semibold mb-2 text-white">Vulnerabilities Found:</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-400">
+                    `;
+                    vulnerabilities.forEach(vul => {
+                        resultHTML += `<li><i class="fas fa-bug text-red-500 mr-2"></i>${vul}</li>`;
+                    });
+                    resultHTML += `</ul>`;
+                } else {
+                    resultHTML += `
+                        <p class="text-green-500 text-lg font-bold mb-4"><i class="fas fa-check-circle mr-2"></i>Status: ${status}</p>
+                        <p class="text-sm text-gray-400 mb-4">Scan Date: ${scanDate}</p>
+                        <p class="text-gray-400">No major vulnerabilities were detected. Remember to stay vigilant as web security is an ongoing process.</p>
+                    `;
+                }
+                resultHTML += `</div>`;
+                scanResults.innerHTML = resultHTML;
+                scanResults.classList.remove('hidden');
+                
+                // Scroll to the results section for better UX on mobile
+                scanResults.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 2000); // 2-second delay
+        });
+        
+        // Initial page load based on URL hash
+        window.addEventListener('load', showPageFromHash);
+        window.addEventListener('hashchange', showPageFromHash);
+    </script>
+</body>
+</html>
