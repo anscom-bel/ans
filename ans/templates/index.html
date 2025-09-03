@@ -360,37 +360,41 @@
                 <p class="text-center text-white mb-8">
                     Fill out the form below to inquire about our services or to schedule a consultation.
                 </p>
-                <form action="https://formspree.io/f/" method="POST" class="space-y-6">
-                    <div>
-                        <label for="name" class="block text-white text-sm font-medium mb-2">Your Name</label>
-                        <input type="text" id="name" name="name" placeholder="John Doe" class="w-full px-5 py-3 rounded-xl bg-gray-900 border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] text-white">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-white text-sm font-medium mb-2">Email Address</label>
-                        <input type="email" id="email" name="email" placeholder="you@example.com" class="w-full px-5 py-3 rounded-xl bg-gray-900 border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] text-white">
-                    </div>
-                    <div>
-                        <label for="service" class="block text-white text-sm font-medium mb-2">Service of Interest</label>
-                        <select id="service" name="service" class="w-full px-5 py-3 rounded-xl bg-gray-900 border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] text-white">
-                            <option value="" disabled selected>-- Select a service --</option>
-                            <option value="cybersecurity">Cybersecurity</option>
-                            <option value="it_development">IT Development</option>
-                            <option value="digital_marketing">Digital Marketing</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="message" class="block text-white text-sm font-medium mb-2">Message</label>
-                        <textarea id="message" name="message" rows="4" placeholder="Tell us about your project or inquiry..." class="w-full px-5 py-3 rounded-xl bg-gray-900 border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] text-white"></textarea>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="w-full btn btn-primary">
-                            <i class="fas fa-paper-plane mr-2"></i> Send Message
-                        </button>
-                    </div>
-                    <input type="hidden" name="_next" value="thank-you.html">
-                    <input type="hidden" name="_subject" value="New message from ANSCOM">
-                </form>
+                <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+
+    <input type="hidden" name="access_key" value="613b2116-7ee8-456d-9c4f-7bc6597d1915">
+
+    <div>
+        <label for="name" class="block text-white text-sm font-medium mb-2">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="John Doe" class="w-full px-5 py-3 rounded-xl bg-gray-900 border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] text-white">
+    </div>
+    <div>
+        <label for="email" class="block text-white text-sm font-medium mb-2">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" class="w-full px-5 py-3 rounded-xl bg-gray-900 border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] text-white">
+    </div>
+    <div>
+        <label for="service" class="block text-white text-sm font-medium mb-2">Service of Interest</label>
+        <select id="service" name="service" class="w-full px-5 py-3 rounded-xl bg-gray-900 border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] text-white">
+            <option value="" disabled selected>-- Select a service --</option>
+            <option value="cybersecurity">Cybersecurity</option>
+            <option value="it_development">IT Development</option>
+            <option value="digital_marketing">Digital Marketing</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
+    <div>
+        <label for="message" class="block text-white text-sm font-medium mb-2">Message</label>
+        <textarea id="message" name="message" rows="4" placeholder="Tell us about your project or inquiry..." class="w-full px-5 py-3 rounded-xl bg-gray-900 border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] text-white"></textarea>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="w-full btn btn-primary">
+            <i class="fas fa-paper-plane mr-2"></i> Send Message
+        </button>
+    </div>
+    <!-- Web3Forms uses the _next hidden input to redirect after submission. -->
+    <input type="hidden" name="_next" value="https://curly-parakeet-x5v4wpjjp45vf6v4g.github.dev//thank-you">
+    <input type="hidden" name="_subject" value="New message from ANSCOM">
+</form>
 
                 <div class="mt-8 pt-8 border-t border-[var(--border-color)]">
                     <h3 class="text-xl font-bold text-white mb-4">Contact Details</h3>
