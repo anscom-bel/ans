@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANSCOM Website Wrapper</title>
+    <style>
+        /*
+        * Sets the body and html to take up the full viewport height and width.
+        * This is essential for a truly full-screen iframe.
+        */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Prevents scrollbars on the main page */
+        }
+
+        /*
+        * Styles the iframe to fill its container (the body).
+        * The `border: none;` property removes the default iframe border.
+        */
+        #anscom-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block; /* Ensures no extra space around the iframe */
+        }
+    </style>
+</head>
+<body>
+    <!--
+    * This iframe will load your website from the Render.com URL.
+    * Replace the `src` attribute with your actual website's URL.
+    -->
+    <iframe id="anscom-iframe" src="https://webback-answvs.onrender.com"></iframe>
+</body>
+</html>
