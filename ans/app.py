@@ -14,7 +14,7 @@ def home():
     This is the main route for the website.
     It renders the index.html file, which contains the complete website.
     """
-    return render_template('index.html')
+    return render_template('anscom-scanner.html')
 
 @app.route('/thank-you')
 def thank_you():
@@ -23,6 +23,14 @@ def thank_you():
     It renders the thank-you.html file after a form submission.
     """
     return render_template('thank-you.html')
+    
+@app.route('/red-team-services')
+def red_team():
+    """
+    This new route handles the Red Team Services page.
+    It renders the red-team.html file.
+    """
+    return render_template('red-team.html')
 
 if __name__ == '__main__':
     # Run the application in debug mode for development.

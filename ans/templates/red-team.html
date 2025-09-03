@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANSCOM | Red Team Services</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #151515;
+            --text-color: white;
+            --accent-color: #46a5ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3 {
+            color: var(--accent-color);
+            transition: color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .card {
+            background-color: #242424;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header with logo and navigation -->
+    <header class="flex justify-between items-center p-5 bg-[var(--bg-color)] relative z-40">
+        <div class="flex items-center gap-4">
+            <img src="/static/images/logo.png" alt="ANSCOM Logo" class="h-12 w-12" />
+            <h1 class="text-2xl font-bold text-[var(--accent-color)]">ANSCOM</h1>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex gap-8 items-center text-sm font-medium">
+            <a href="/" class="hover:underline transition-colors no-underline"><i class="fas fa-home mr-2"></i>Home</a>
+            <a href="/#services" class="hover:underline transition-colors no-underline"><i class="fas fa-handshake mr-2"></i>Services</a>
+            <a href="/#contact" class="hover:underline transition-colors no-underline"><i class="fas fa-envelope mr-2"></i>Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Content for Red Team Services -->
+    <main class="container mx-auto p-5 flex-grow">
+        <section id="red-team-intro" class="py-16 px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-center mb-4 leading-tight">Red Team Services</h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto text-center">
+                Think like an attacker to strengthen your defenses. Our Red Team services provide a realistic, comprehensive assessment of your security posture by simulating real-world cyber threats.
+            </p>
+        </section>
+
+        <section id="what-we-do" class="card max-w-5xl mx-auto mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">What is Red Teaming?</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2">
+                    <p class="text-gray-400 mb-4">
+                        A Red Team is a group of ethical hackers who act as real-world adversaries. Our goal is not just to find vulnerabilities, but to identify weaknesses in your people, processes, and technology by attempting to achieve a specific objective, such as exfiltrating data or gaining control of critical systems.
+                    </p>
+                    <p class="text-gray-400">
+                        This approach provides a much deeper understanding of your security weaknesses than traditional vulnerability assessments. We deliver a detailed report with actionable recommendations to help you close the gaps and build a truly resilient defense.
+                    </p>
+                </div>
+                <div class="md:w-1/2 text-center">
+                    <img src="https://placehold.co/400x250/242424/46a5ff?text=Red+Team+Simulation" alt="Red Team Simulation" class="rounded-lg mx-auto shadow-lg" />
+                </div>
+            </div>
+        </section>
+
+        <section id="our-services" class="max-w-5xl mx-auto mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Specialized Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Service Card 1: Penetration Testing -->
+                <div class="card p-8 flex flex-col items-start">
+                    <i class="fas fa-search-plus text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Penetration Testing</h3>
+                    <p class="text-gray-400 mb-4 flex-grow">
+                        We perform authorized attacks on your systems to find and exploit vulnerabilities before attackers do. This includes web application, network, and mobile penetration testing.
+                    </p>
+                </div>
+
+                <!-- Service Card 2: Adversary Simulation -->
+                <div class="card p-8 flex flex-col items-start">
+                    <i class="fas fa-fingerprint text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Adversary Simulation</h3>
+                    <p class="text-gray-400 mb-4 flex-grow">
+                        A more advanced test that mimics a real-world threat actor with a specific goal in mind. We assess your ability to detect, respond to, and mitigate a targeted attack.
+                    </p>
+                </div>
+
+                <!-- Service Card 3: Social Engineering -->
+                <div class="card p-8 flex flex-col items-start">
+                    <i class="fas fa-users-slash text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Social Engineering</h3>
+                    <p class="text-gray-400 mb-4 flex-grow">
+                        We test the human element of your security. This includes phishing campaigns, vishing (phone calls), and physical security attempts to gain access to sensitive information or areas.
+                    </p>
+                </div>
+
+                <!-- Service Card 4: Phishing Simulations -->
+                <div class="card p-8 flex flex-col items-start">
+                    <i class="fas fa-envelope-open-text text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Phishing Simulations</h3>
+                    <p class="text-gray-400 mb-4 flex-grow">
+                        Our customized phishing campaigns help you train your employees to spot malicious emails and report them, turning your workforce into your strongest defense.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section id="cta" class="card text-center p-12 max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold mb-4">Ready to Test Your Defenses?</h2>
+            <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
+                Don't wait for a real attack to find out your weaknesses. Contact our team today for a confidential consultation and discover how a Red Team engagement can protect your business.
+            </p>
+            <a href="/#contact" class="inline-block bg-[var(--accent-color)] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300 no-underline">
+                Request a Consultation
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1a1a] text-gray-400 mt-auto py-12 px-8">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- Column 1: About ANSCOM -->
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">About ANSCOM</h3>
+                <p class="text-sm leading-relaxed">
+                    ANSCOM is a leading cybersecurity firm committed to protecting businesses from the evolving landscape of cyber threats. We specialize in proactive security solutions, including Red Teaming, vulnerability assessments, and managed security services.
+                </p>
+            </div>
+
+            <!-- Column 2: Quick Links (Sitemap) -->
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/" class="hover:text-[var(--accent-color)] transition-colors">Home</a></li>
+                    <li><a href="/#services" class="hover:text-[var(--accent-color)] transition-colors">Services</a></li>
+                    <li><a href="/#contact" class="hover:text-[var(--accent-color)] transition-colors">Contact</a></li>
+                    <li><a href="/#legal" class="hover:text-[var(--accent-color)] transition-colors">Privacy Policy</a></li>
+                    <li><a href="/#terms" class="hover:text-[var(--accent-color)] transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Contact Info -->
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">Contact Us</h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center"><i class="fas fa-map-marker-alt mr-3 text-[var(--accent-color)]"></i> 123 Cyber Ave, Suite 400, Anytown, CY 12345</li>
+                    <li class="flex items-center"><i class="fas fa-phone-alt mr-3 text-[var(--accent-color)]"></i> (123) 456-7890</li>
+                    <li class="flex items-center"><i class="fas fa-envelope mr-3 text-[var(--accent-color)]"></i> <a href="mailto:info@anscom.com" class="hover:text-[var(--accent-color)] transition-colors">info@anscom.com</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Social and Newsletter -->
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">Stay Connected</h3>
+                <p class="text-sm mb-4">
+                    Subscribe to our newsletter for the latest cybersecurity insights and updates.
+                </p>
+                <form action="#" method="POST" class="flex flex-col sm:flex-row items-center gap-2">
+                    <input type="email" placeholder="Your email address" class="w-full px-4 py-2 rounded-md bg-[#242424] text-white border border-[#333] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]" />
+                    <button type="submit" class="w-full sm:w-auto mt-2 sm:mt-0 bg-[var(--accent-color)] text-white font-bold py-2 px-6 rounded-md hover:bg-[#6fb0ff] transition-colors duration-300">
+                        Subscribe
+                    </button>
+                </form>
+                <div class="flex space-x-4 mt-6">
+                    <a href="#" class="text-gray-400 hover:text-[var(--accent-color)] transition-colors text-xl"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[var(--accent-color)] transition-colors text-xl"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[var(--accent-color)] transition-colors text-xl"><i class="fab fa-facebook-square"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[var(--accent-color)] transition-colors text-xl"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center text-xs text-gray-500">
+            <p>&copy; 2025 ANSCOM. All rights reserved. All trademarks, service marks, and trade names are proprietary to ANSCOM or other respective owners. The unauthorized reproduction or distribution of this material, or any portion of it, is strictly prohibited. This website and its content are provided for informational purposes only. The information contained herein is subject to change without notice. ANSCOM assumes no responsibility for any errors or omissions in the content of this site. This content is not intended to provide legal, financial, or security advice.</p>
+        </div>
+    </footer>
+</body>
+</html>
