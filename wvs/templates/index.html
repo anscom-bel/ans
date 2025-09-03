@@ -15,7 +15,7 @@
     <!--
       Font Awesome is used for the security and navigation icons.
     -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         :root {
@@ -89,7 +89,9 @@
         <nav class="hidden md:flex gap-8 items-center text-sm font-medium">
             <a href="#home" class="hover:underline transition-colors nav-link"><i class="fas fa-home mr-2"></i>Home</a>
             <a href="#scan" class="hover:underline transition-colors nav-link"><i class="fas fa-search mr-2"></i>Scan Now</a>
+            <a href="#features" class="hover:underline transition-colors nav-link"><i class="fas fa-magic mr-2"></i>Features</a>
             <a href="#about" class="hover:underline transition-colors nav-link"><i class="fas fa-info-circle mr-2"></i>About</a>
+            <a href="#testimonials" class="hover:underline transition-colors nav-link"><i class="fas fa-comment-dots mr-2"></i>Testimonials</a>
             <a href="#contact" class="hover:underline transition-colors nav-link"><i class="fas fa-envelope mr-2"></i>Contact</a>
         </nav>
         
@@ -106,7 +108,9 @@
     <nav id="mobile-menu" class="mobile-menu fixed inset-0 z-30 transform translate-x-full bg-[var(--bg-color)] flex flex-col justify-center items-center p-5">
         <a href="#home" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Home</a>
         <a href="#scan" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Scan Now</a>
+        <a href="#features" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Features</a>
         <a href="#about" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">About</a>
+        <a href="#testimonials" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Testimonials</a>
         <a href="#contact" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Contact</a>
     </nav>
 
@@ -118,9 +122,59 @@
             <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
                 Discover and fix security vulnerabilities before they become a problem. Our scanner provides fast, comprehensive analysis of your web application.
             </p>
-            <a href="#scan" class="inline-block bg-[var(--accent-color)] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300 nav-link">
+            <a href="#scan" class="inline-block bg-[var(--accent-color)] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-white hover:text-[#151515] transition-colors duration-300 nav-link">
                 Start a Free Scan
             </a>
+        </section>
+
+        <!-- Features Section (New Page) -->
+        <section id="features" class="page hidden card mb-16">
+            <h2 class="text-3xl text-center font-bold mb-8">Powerful Features</h2>
+            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
+                Our scanner is built with the latest technology to provide you with a detailed and actionable security report.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Feature Card 1 -->
+                <div class="flex items-start gap-6">
+                    <div class="flex-shrink-0 p-4 rounded-full bg-[var(--accent-color)]/20 text-[var(--accent-color)]">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Comprehensive Scanning</h3>
+                        <p class="text-gray-400">Our tool performs checks for over 20+ common web vulnerabilities, including SQL Injection, XSS, and more, ensuring a thorough security assessment.</p>
+                    </div>
+                </div>
+                <!-- Feature Card 2 -->
+                <div class="flex items-start gap-6">
+                    <div class="flex-shrink-0 p-4 rounded-full bg-[var(--accent-color)]/20 text-[var(--accent-color)]">
+                        <i class="fas fa-tachometer-alt text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Lightning Fast Analysis</h3>
+                        <p class="text-gray-400">We prioritize speed without sacrificing accuracy. Get your scan results in minutes, not hours, so you can act quickly.</p>
+                    </div>
+                </div>
+                <!-- Feature Card 3 -->
+                <div class="flex items-start gap-6">
+                    <div class="flex-shrink-0 p-4 rounded-full bg-[var(--accent-color)]/20 text-[var(--accent-color)]">
+                        <i class="fas fa-lock text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Non-Intrusive & Safe</h3>
+                        <p class="text-gray-400">The scanner uses passive techniques that won't harm your website's performance or integrity. Your data is always secure with us.</p>
+                    </div>
+                </div>
+                <!-- Feature Card 4 -->
+                <div class="flex items-start gap-6">
+                    <div class="flex-shrink-0 p-4 rounded-full bg-[var(--accent-color)]/20 text-[var(--accent-color)]">
+                        <i class="fas fa-chart-pie text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Clear, Actionable Reports</h3>
+                        <p class="text-gray-400">Receive an easy-to-understand report with risk severity ratings and practical recommendations on how to fix each issue.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Scan Section (Page) -->
@@ -170,6 +224,49 @@
                     <i class="fas fa-chart-line text-4xl text-[var(--accent-color)] mb-4"></i>
                     <h3 class="text-xl font-semibold text-white mb-2">Actionable Insights</h3>
                     <p class="text-gray-400">For each vulnerability found, our report offers clear recommendations and insights to help you secure your website effectively.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials Section (New Page) -->
+        <section id="testimonials" class="page hidden">
+            <h2 class="text-3xl text-center font-bold mb-8">What Our Users Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="card p-8 flex flex-col">
+                    <i class="fas fa-quote-left text-xl text-gray-500 mb-4"></i>
+                    <p class="text-gray-400 mb-6 flex-grow">"ANSCOM Scanner is an essential tool for my development workflow. It helped me find and fix a critical XSS vulnerability that I would have otherwise missed. The report was clear and easy to follow!"</p>
+                    <div class="flex items-center">
+                        <i class="fas fa-user-circle text-4xl text-[var(--accent-color)] mr-4"></i>
+                        <div>
+                            <p class="font-bold text-white">Alex Chen</p>
+                            <p class="text-sm text-gray-500">Web Developer, Tech Solutions Inc.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="card p-8 flex flex-col">
+                    <i class="fas fa-quote-left text-xl text-gray-500 mb-4"></i>
+                    <p class="text-gray-400 mb-6 flex-grow">"As a small business owner, I don't have a huge budget for security. ANSCOM provides a quick and free way to get peace of mind about my website's safety. Highly recommended!"</p>
+                    <div class="flex items-center">
+                        <i class="fas fa-user-circle text-4xl text-[var(--accent-color)] mr-4"></i>
+                        <div>
+                            <p class="font-bold text-white">Maria Rodriguez</p>
+                            <p class="text-sm text-gray-500">Founder, Creative Ventures</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="card p-8 flex flex-col">
+                    <i class="fas fa-quote-left text-xl text-gray-500 mb-4"></i>
+                    <p class="text-gray-400 mb-6 flex-grow">"The detailed reports and actionable insights are a game-changer. It's not just a list of problems; it's a guide to fixing them. ANSCOM has become a critical part of our security protocol."</p>
+                    <div class="flex items-center">
+                        <i class="fas fa-user-circle text-4xl text-[var(--accent-color)] mr-4"></i>
+                        <div>
+                            <p class="font-bold text-white">David Miller</p>
+                            <p class="text-sm text-gray-500">Lead Security Analyst</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -235,7 +332,7 @@
                 <div>
                     <h3 class="font-bold text-lg mb-4 text-white">Connect</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="hover:underline transition-colors"><i class="fab fa-twitter mr-2"></i> Twitter</a></li>
+                        <li><a href="#" class="hover:underline transition-colors"><i class="fab fa-brands fa-x-twitter mr-2"></i> Twitter</a>
                         <li><a href="#" class="hover:underline transition-colors"><i class="fab fa-linkedin mr-2"></i> LinkedIn</a></li>
                         <li><a href="#" class="hover:underline transition-colors"><i class="fab fa-github mr-2"></i> GitHub</a></li>
                         <li><a href="#" class="hover:underline transition-colors"><i class="fab fa-discord mr-2"></i> Discord</a></li>

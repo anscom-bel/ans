@@ -56,6 +56,38 @@ def rdp():
     """
     return render_template('legal/rdp.html')
 
+@app.route('/tools')
+def tools():
+    """
+    This route handles the main Tools page.
+    It renders the tools.html file inside the 'templates' folder.
+    """
+    return render_template('tools.html')
+
+@app.route('/tools/npt')
+def npt():
+    """
+    This route handles the Network Protocol Tester (NPT) page.
+    It renders the npt.html file inside the 'tools' folder.
+    """
+    return render_template('tools/npt.html')
+
+@app.route('/tools/scanner')
+def scanner():
+    """
+    This route handles the Network Scanner page.
+    It renders the scanner.html file inside the 'tools' folder.
+    """
+    return render_template('tools/scanner.html')
+
+@app.route('/i')
+def i_page():
+    """
+    This new route handles the 'i' page.
+    It renders the i.html file.
+    """
+    return render_template('index-ii.html')
+
 if __name__ == '__main__':
     # Run the application in debug mode for development.
     # The debug flag allows for automatic code reloading and a debugger.
