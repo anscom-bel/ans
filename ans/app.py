@@ -14,7 +14,7 @@ def home():
     This is the main route for the website.
     It renders the index.html file, which contains the complete website.
     """
-    return render_template('anscom-scanner.html')
+    return render_template('index.html')
 
 @app.route('/thank-you')
 def thank_you():
