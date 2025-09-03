@@ -1,0 +1,86 @@
+body {
+    background-color: #151515;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+    background-color: #151515;
+}
+
+.navbar a {
+    color: #ffffff;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    color: #46a5ff;
+}
+
+.service-card, .team-card, .blog-post, .career-opening {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.service-card h2, .team-card h2, .blog-post h2, .career-opening h2 {
+    color: #46a5ff;
+}
+
+.service-card p, .team-card p, .blog-post p, .career-opening p {
+    color: #ffffff;
+}
+
+.contact-form {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.contact-form label {
+    color: #ffffff;
+}
+
+.contact-form input, .contact-form textarea {
+    background-color: #151515;
+    color: #ffffff;
+    border: 1px solid #46a5ff;
+}
+
+.contact-form button {
+    background-color: #46a5ff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background-color: #3182ce;
+}
+
+.blog-post a {
+    color: #46a5ff;
+    text-decoration: none;
+}
+
+.blog-post a:hover {
+    text-decoration: underline;
+}
+
+.about-section, .team-section, .blog-section, .careers-section {
+    margin-bottom: 40px;
+}
+
+.about-section h2, .team-section h2, .blog-section h2, .careers-section h2 {
+    color: #46a5ff;
+    margin-bottom: 20px;
+}
+
+.about-section p, .team-section p, .blog-section p, .careers-section p {
+    color: #ffffff;
+    margin-bottom: 20px;
+}
