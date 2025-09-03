@@ -23,14 +23,38 @@ def thank_you():
     It renders the thank-you.html file after a form submission.
     """
     return render_template('thank-you.html')
-    
-@app.route('/red-team-services')
+
+@app.route('/services/cybersecurity/red-team')
 def red_team():
     """
-    This new route handles the Red Team Services page.
-    It renders the red-team.html file.
+    This route handles the Red Team Services page.
+    It now correctly looks for the file inside the new 'services/cybersecurity' folder.
     """
-    return render_template('red-team.html')
+    return render_template('services/cybersecurity/red-team.html')
+
+@app.route('/services/cybersecurity/blue-team')
+def blue_team():
+    """
+    This new route handles the Blue Team Services page.
+    It looks for the blue-team.html file inside the 'services/cybersecurity' folder.
+    """
+    return render_template('services/cybersecurity/blue-team.html')
+    
+@app.route('/legal/dpa')
+def dpa():
+    """
+    This new route handles the Data Processing Agreement (DPA) page.
+    It looks for the dpa.html file inside the 'legal' folder within 'templates'.
+    """
+    return render_template('legal/dpa.html')
+
+@app.route('/legal/rdp')
+def rdp():
+    """
+    This new route handles the Responsible Disclosure Policy (RDP) page.
+    It looks for the rdp.html file inside the 'legal' folder within 'templates'.
+    """
+    return render_template('legal/rdp.html')
 
 if __name__ == '__main__':
     # Run the application in debug mode for development.

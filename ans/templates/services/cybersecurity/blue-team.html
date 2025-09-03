@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANSCOM | Blue Team Services</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #151515;
+            --text-color: white;
+            --accent-color: #46a5ff;
+            --card-bg: #242424;
+            --border-color: #333;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            color: var(--accent-color);
+            transition: color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Custom CSS for a professional, slightly-elevated button style */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-primary:hover {
+            background-color: #6fb0ff;
+        }
+        
+        /* Custom CSS for hamburger animation */
+        .hamburger div {
+            background-color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.open div:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.open div:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .hamburger.open div:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Full-screen mobile menu with animation */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header with logo and navigation -->
+    <header class="flex justify-between items-center p-5 bg-[var(--bg-color)] relative z-40">
+        <div class="flex items-center gap-4">
+            <img src="/static/images/logo.png" alt="ANSCOM Logo" class="h-12 w-12" />
+            <h1 class="text-2xl font-bold text-[var(--accent-color)]">ANSCOM</h1>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex gap-8 items-center text-sm font-medium">
+            <a href="/" class="hover:underline transition-colors no-underline"><i class="fas fa-home mr-2"></i>Home</a>
+            <a href="/#services" class="hover:underline transition-colors no-underline"><i class="fas fa-handshake mr-2"></i>Services</a>
+            <a href="/#contact" class="hover:underline transition-colors no-underline"><i class="fas fa-envelope mr-2"></i>Contact</a>
+        </nav>
+
+        <!-- Mobile Hamburger Menu Button -->
+        <button class="md:hidden text-white focus:outline-none z-50" id="menu-button">
+            <div class="hamburger flex flex-col gap-1 w-6">
+                <div class="h-1 rounded-full"></div>
+                <div class="h-1 rounded-full"></div>
+                <div class="h-1 rounded-full"></div>
+            </div>
+        </button>
+    </header>
+
+    <!-- Full-screen Mobile Menu with animation -->
+    <nav id="mobile-menu" class="mobile-menu fixed inset-0 z-30 transform translate-x-full bg-[var(--bg-color)] flex flex-col justify-center items-center p-5">
+        <button id="close-menu-button" class="absolute top-8 right-8 text-white text-3xl">&times;</button>
+        <a href="/" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Home</a>
+        <a href="/#services" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Services</a>
+        <a href="/#contact" class="text-3xl font-bold my-4 nav-link" onclick="closeMenu()">Contact</a>
+    </nav>
+
+    <!-- Main Content for Blue Team Services -->
+    <main class="container mx-auto p-5 flex-grow">
+        <section id="blue-team-intro" class="py-16 px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-center mb-4 leading-tight">Blue Team Services</h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto text-center">
+                Build a fortress against cyber threats. Our Blue Team services focus on proactive defense, detection, and response to protect your organization's critical assets.
+            </p>
+        </section>
+
+        <section id="what-we-do" class="card max-w-5xl mx-auto mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">What is Blue Teaming?</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2">
+                    <p class="text-gray-400 mb-4">
+                        A Blue Team is a group of cybersecurity professionals who are responsible for defending an organization’s information systems against cyberattacks. While Red Teams simulate attacks, Blue Teams focus on building robust defenses, monitoring for threats, and responding swiftly to incidents.
+                    </p>
+                    <p class="text-gray-400">
+                        This proactive and reactive approach ensures your defenses are not only strong but also continuously monitored and improved. We help you establish a security operations center (SOC) and provide the tools and expertise needed to identify and mitigate threats before they can cause significant damage.
+                    </p>
+                </div>
+                <div class="md:w-1/2 text-center">
+                    <img src="https://placehold.co/400x250/242424/46a5ff?text=Blue+Team+Defense" alt="Blue Team Defense" class="rounded-lg mx-auto shadow-lg" />
+                </div>
+            </div>
+        </section>
+
+        <section id="our-services" class="max-w-5xl mx-auto mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Specialized Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Service Card 1: Security Monitoring & SIEM -->
+                <div class="card p-8 flex flex-col items-start">
+                    <i class="fas fa-eye text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Security Monitoring & SIEM</h3>
+                    <p class="text-gray-400 mb-4 flex-grow">
+                        We provide continuous monitoring of your network and systems to detect malicious activity in real-time. Our Security Information and Event Management (SIEM) solutions aggregate logs and alerts for a comprehensive view of your security posture.
+                    </p>
+                </div>
+
+                <!-- Service Card 2: Incident Response & Forensics -->
+                <div class="card p-8 flex flex-col items-start">
+                    <i class="fas fa-shield-alt text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Incident Response & Forensics</h3>
+                    <p class="text-gray-400 mb-4 flex-grow">
+                        When an incident occurs, our team responds swiftly to contain the breach, eradicate the threat, and restore normal operations. We conduct digital forensics to identify the root cause and prevent future attacks.
+                    </p>
+                </div>
+
+                <!-- Service Card 3: Threat Hunting -->
+                <div class="card p-8 flex flex-col items-start">
+                    <i class="fas fa-compass text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Threat Hunting</h3>
+                    <p class="text-gray-400 mb-4 flex-grow">
+                        Our experts proactively search for hidden threats and adversaries that may have evaded your automated defenses. We use a hypothesis-driven approach to uncover sophisticated attacks.
+                    </p>
+                </div>
+
+                <!-- Service Card 4: Vulnerability Management -->
+                <div class="card p-8 flex flex-col items-start">
+                    <i class="fas fa-bug text-4xl text-[var(--accent-color)] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Vulnerability Management</h3>
+                    <p class="text-gray-400 mb-4 flex-grow">
+                        We help you identify, classify, and prioritize vulnerabilities in your systems. We provide a structured plan for remediation to ensure your most critical weaknesses are addressed first.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section id="cta" class="card text-center p-12 max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold mb-4">Ready to Strengthen Your Defenses?</h2>
+            <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
+                Don't wait for a breach to occur. Contact our team today for a confidential consultation and discover how a robust Blue Team strategy can protect your business.
+            </p>
+            <a href="/#contact" class="inline-block bg-[var(--accent-color)] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#6fb0ff] transition-colors duration-300 no-underline">
+                Request a Consultation
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1a1a] text-gray-400 mt-auto py-12 px-8">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- Column 1: About ANSCOM -->
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">About ANSCOM</h3>
+                <p class="text-sm leading-relaxed">
+                    ANSCOM is a leading cybersecurity firm committed to protecting businesses from the evolving landscape of cyber threats. We specialize in proactive security solutions, including Red Teaming, vulnerability assessments, and managed security services.
+                </p>
+            </div>
+
+            <!-- Column 2: Quick Links (Sitemap) -->
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/" class="hover:text-[var(--accent-color)] transition-colors">Home</a></li>
+                    <li><a href="/#services" class="hover:text-[var(--accent-color)] transition-colors">Services</a></li>
+                    <li><a href="/#contact" class="hover:text-[var(--accent-color)] transition-colors">Contact</a></li>
+                    <li><a href="/#legal" class="hover:text-[var(--accent-color)] transition-colors">Privacy Policy</a></li>
+                    <li><a href="/#terms" class="hover:text-[var(--accent-color)] transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Contact Info -->
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">Contact Us</h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center"><i class="fas fa-map-marker-alt mr-3 text-[var(--accent-color)]"></i> 123 Rue de la Liberté, 1000 Brussels, Belgium</li>
+                    <li class="flex items-center"><i class="fas fa-phone-alt mr-3 text-[var(--accent-color)]"></i> +32 2 123 45 67</li>
+                    <li class="flex items-center"><i class="fas fa-envelope mr-3 text-[var(--accent-color)]"></i> <a href="mailto:info.ans@tuta.io" class="hover:text-[var(--accent-color)] transition-colors">info.ans@tuta.io</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Social and Newsletter -->
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">Stay Connected</h3>
+                <p class="text-sm mb-4">
+                    Subscribe to our newsletter for the latest cybersecurity insights and updates.
+                </p>
+                <form id="newsletterForm" action="#" method="POST" class="flex flex-col sm:flex-row items-center gap-2">
+                    <input id="emailInput" type="email" placeholder="Your email address" class="w-full px-4 py-2 rounded-md bg-[#242424] text-white border border-[#333] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]" required />
+                    <button type="submit" class="w-full sm:w-auto mt-2 sm:mt-0 bg-[var(--accent-color)] text-white font-bold py-2 px-6 rounded-md hover:bg-[#6fb0ff] transition-colors duration-300">
+                        Subscribe
+                    </button>
+                </form>
+                <div id="messageArea" class="text-sm mt-2"></div>
+                <div class="flex space-x-4 mt-6">
+                    <a href="#" class="text-gray-400 hover:text-[var(--accent-color)] transition-colors text-xl"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[var(--accent-color)] transition-colors text-xl"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[var(--accent-color)] transition-colors text-xl"><i class="fab fa-facebook-square"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[var(--accent-color)] transition-colors text-xl"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center text-xs text-gray-500">
+            <p>&copy; 2025 ANSCOM. All rights reserved. All trademarks, service marks, and trade names are proprietary to ANSCOM or other respective owners. The unauthorized reproduction or distribution of this material, or any portion of it, is strictly prohibited. This website and its content are provided for informational purposes only. The information contained herein is subject to change without notice. ANSCOM assumes no responsibility for any errors or omissions in the content of this site. This content is not intended to provide legal, financial, or security advice.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+        
+        // Firebase Setup
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+
+        setLogLevel('debug'); // For debugging
+
+        let db;
+        let auth;
+        let userId;
+
+        const setupFirebase = async () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                if (token) {
+                    await signInWithCustomToken(auth, token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                userId = auth.currentUser?.uid || crypto.randomUUID();
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+            }
+        };
+
+        await setupFirebase();
+
+        const newsletterForm = document.getElementById('newsletterForm');
+        const emailInput = document.getElementById('emailInput');
+        const messageArea = document.getElementById('messageArea');
+
+        const menuButton = document.getElementById('menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.querySelector('.hamburger');
+
+        const toggleMenu = () => {
+            mobileMenu.classList.toggle('translate-x-full');
+            hamburger.classList.toggle('open');
+            document.body.style.overflow = mobileMenu.classList.contains('translate-x-full') ? '' : 'hidden';
+        };
+
+        const closeMenu = () => {
+            mobileMenu.classList.add('translate-x-full');
+            hamburger.classList.remove('open');
+            document.body.style.overflow = '';
+        };
+
+        menuButton.addEventListener('click', toggleMenu);
+        closeMenuButton.addEventListener('click', closeMenu);
+
+        newsletterForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            messageArea.textContent = 'Subscribing...';
+            messageArea.classList.remove('text-green-500', 'text-red-500');
+            messageArea.classList.add('text-gray-400');
+
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                messageArea.textContent = 'Please enter a valid email address.';
+                messageArea.classList.add('text-red-500');
+                return;
+            }
+
+            try {
+                if (!db) {
+                    console.error("Firestore is not initialized.");
+                    messageArea.textContent = 'Subscription failed. Please try again later.';
+                    messageArea.classList.add('text-red-500');
+                    return;
+                }
+
+                const docRef = await addDoc(collection(db, `artifacts/${appId}/public/data/newsletter_subscribers`), {
+                    email: email,
+                    timestamp: serverTimestamp(),
+                });
+
+                messageArea.textContent = 'Thank you for subscribing!';
+                messageArea.classList.remove('text-red-500');
+                messageArea.classList.add('text-green-500');
+                emailInput.value = '';
+
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                messageArea.textContent = 'Subscription failed. Please try again later.';
+                messageArea.classList.remove('text-green-500');
+                messageArea.classList.add('text-red-500');
+            }
+        });
+    </script>
+</body>
+</html>
