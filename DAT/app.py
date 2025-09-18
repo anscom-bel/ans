@@ -2,6 +2,7 @@ import os
 import json
 import uuid
 from flask import Flask, render_template, request, redirect, url_for, jsonify, send_from_directory
+from werkzeug.utils import secure_filename  # Ensure this is imported for secure_filename
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -49,15 +50,15 @@ def contact():
         name = request.form.get('name')
         email = request.form.get('email')
         message = request.form.get('message')
-        
+
         print(f"New contact form submission:")
         print(f"Name: {name}")
         print(f"Email: {email}")
         print(f"Message: {message}")
-        
+
         # Redirect the user to a thank-you page or back to the home page
         return redirect(url_for('home'))
-    
+
     return render_template('contact.html')
 
 # --- Tools Routes ---
@@ -70,6 +71,11 @@ def file_manager():
 def compliance_auditor():
     """Renders the Compliance Auditor page."""
     return render_template('compliance_auditor.html')
+
+@app.route('/tools/nmap')
+def network_mapper():
+    """Renders the Network Mapper page."""
+    return render_template('network_mapper.html')
 
 # --- File Manager API Routes ---
 @app.route('/tools/upload', methods=['POST'])
@@ -84,10 +90,10 @@ def upload_file():
     filename = secure_filename(file.filename)
     unique_id = str(uuid.uuid4())
     file_path = os.path.join(UPLOAD_FOLDER, unique_id)
-    
+
     try:
         file.save(file_path)
-        
+
         metadata = load_file_metadata()
         metadata.append({
             'id': unique_id,
@@ -95,7 +101,7 @@ def upload_file():
             'server_filename': unique_id
         })
         save_file_metadata(metadata)
-        
+
         return jsonify({'message': 'File uploaded successfully', 'fileId': unique_id}), 201
     except Exception as e:
         return jsonify({'error': f'An error occurred: {e}'}), 500
@@ -114,10 +120,10 @@ def download_file(file_id):
     """Downloads a specific file based on its ID."""
     metadata = load_file_metadata()
     file_data = next((item for item in metadata if item['id'] == file_id), None)
-    
+
     if not file_data:
         return jsonify({'error': 'File not found'}), 404
-        
+
     return send_from_directory(
         UPLOAD_FOLDER,
         file_data['server_filename'],
@@ -133,18 +139,38 @@ def delete_file(file_id):
 
     if not file_data:
         return jsonify({'error': 'File not found'}), 404
-    
+
     try:
         file_path = os.path.join(UPLOAD_FOLDER, file_data['server_filename'])
         if os.path.exists(file_path):
             os.remove(file_path)
-            
+
         updated_metadata = [item for item in metadata if item['id'] != file_id]
         save_file_metadata(updated_metadata)
 
         return jsonify({'message': 'File deleted successfully'}), 200
     except Exception as e:
         return jsonify({'error': f'An error occurred: {e}'}), 500
+
+# --- Network Mapper API Routes ---
+import nmap
+
+@app.route('/scan', methods=['POST'])
+def scan():
+    data = request.get_json()
+    target = data.get('target')
+    nm = nmap.PortScanner()
+    nm.scan(target, '1-1024')
+    results = []
+    for host in nm.all_hosts():
+        result = {
+            'host': host,
+            'status': nm[host].state(),
+            'openPorts': [p for p in nm[host]['tcp'].keys() if nm[host]['tcp'][p]['state'] == 'open'],
+            'os': nm[host]['osclass'][0]['osfamily'] if 'osclass' in nm[host] else 'Unknown'
+        }
+        results.append(result)
+    return jsonify(results)
 
 if __name__ == '__main__':
     app.run(debug=True)

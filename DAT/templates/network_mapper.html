@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATCOMIN Network Mapper</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome is used for static icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .card {
+            background-color: #2a2a2a;
+            border: 1px solid #4a4a4a;
+        }
+        .icon {
+            color: #46a5ff;
+        }
+        .hamburger {
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 50;
+            transition: transform 0.3s ease;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #f5f5f5;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:first-child {
+            transform: translateY(9px) rotate(45deg);
+        }
+        .hamburger.active span:last-child {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+        .full-screen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 26, 26, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+            z-index: 40;
+        }
+        .full-screen-menu.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <!-- Header -->
+    <header class="bg-[#1a1a1a] text-white py-4 px-8">
+        <!-- Flex container for the logo, nav, and hamburger. It stacks them vertically on mobile. -->
+        <div class="container mx-auto flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            <a href="/" class="text-3xl font-bold text-white tracking-widest">DATCOMIN Network Mapper</a>
+            <button id="hamburger-button" class="md:hidden flex hamburger">
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="/index.html" class="hover:text-blue-400 hover:underline transition-colors duration-200 font-semibold border-b-2 border-blue-400">Home</a>
+                <a href="/about.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">About</a>
+                <a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Services</a>
+                <a href="/contact.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Contact</a>
+                <!-- Translator Button -->
+                <div class="relative inline-block text-left ml-4">
+                    <button id="translator-button" class="inline-flex justify-center w-full rounded-md px-4 py-2 bg-transparent text-sm font-medium text-white hover:text-blue-400 focus:outline-none transition-colors duration-200">
+                        <i class="fas fa-globe mr-2"></i>
+                        Translate
+                        <i id="translator-arrow" class="fas fa-chevron-down ml-2 transition-transform duration-200 transform"></i>
+                    </button>
+                    <div id="translator-dropdown" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-[#2a2a2a] ring-1 ring-black ring-opacity-5 hidden z-50">
+                        <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-[#4a4a4a] hover:text-white" role="menuitem">English</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-[#4a4a4a] hover:text-white" role="menuitem">Hindi (हिंदी)</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-[#4a4a4a] hover:text-white" role="menuitem">Tamil (தமிழ்)</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Full-screen Mobile Menu -->
+    <div id="full-screen-menu" class="full-screen-menu md:hidden">
+        <nav class="flex flex-col items-center space-y-6 text-2xl font-semibold">
+            <a href="/index.html" class="text-blue-400 hover:underline transition-colors duration-200">Home</a>
+            <a href="/about.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">About</a>
+            <a href="/services.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">Services</a>
+            <a href="/contact.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">Contact</a>
+            <!-- Language links for mobile -->
+            <div class="pt-6">
+                <p class="text-gray-400 text-sm mb-2">Translate:</p>
+                <a href="#" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200 text-base">English</a> |
+                <a href="#" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200 text-base">Hindi (हिंदी)</a> |
+                <a href="#" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200 text-base">Tamil (தமிழ்)</a>
+            </div>
+        </nav>
+    </div>
+
+    <main class="flex-grow py-12">
+        <!-- Hero Section -->
+        <section class="container mx-auto max-w-5xl text-center py-16">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-white drop-shadow-md">
+                DATCOMIN Network Mapper
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
+                A port scanner and network discovery tool for mapping out a network, identifying active hosts and their services, and detecting open ports and running operating systems.
+            </p>
+        </section>
+
+        <!-- Network Mapper Section -->
+        <section class="container mx-auto max-w-5xl py-12">
+            <h2 class="text-4xl font-bold text-center mb-8">Scan a Network</h2>
+            <div class="card p-6 rounded-xl shadow-lg">
+                <form id="scan-form">
+                    <div class="mb-4">
+                        <label for="target" class="block text-white text-sm font-bold mb-2">Target IP/Range:</label>
+                        <input type="text" id="target" class="w-full p-2 rounded-md" required>
+                    </div>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Scan</button>
+                </form>
+                <div id="scan-results" class="mt-8"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1a1a] text-gray-400 py-12 px-8 mt-12">
+        <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">DATCOMIN</h3>
+                <p class="text-sm">Empowering India's digital future with innovative data and communication solutions.</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Services</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Network Solutions</a></li>
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Cloud & Data Services</a></li>
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Cybersecurity</a></li>
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Managed IT Services</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Careers</a></li>
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Partners</a></li>
+                    <li><a href="/contact" class="hover:text-blue-400 hover:underline transition-colors duration-200">Support</a></li>
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Case Studies</a></li>
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Legal & Privacy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Follow Us</h3>
+                <div class="flex space-x-4 text-xl">
+                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8 text-sm">
+            &copy; 2025 DATCOMIN. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburger-button');
+        const fullScreenMenu = document.getElementById('full-screen-menu');
+        const translatorBtn = document.getElementById('translator-button');
+        const translatorDropdown = document.getElementById('translator-dropdown');
+        const translatorArrow = document.getElementById('translator-arrow');
+
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            fullScreenMenu.classList.toggle('active');
+        });
+
+        fullScreenMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('active');
+                fullScreenMenu.classList.remove('active');
+            });
+        });
+
+        translatorBtn.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isDropdownVisible = !translatorDropdown.classList.contains('hidden');
+            if (isDropdownVisible) {
+                translatorDropdown.classList.add('hidden');
+                translatorArrow.classList.remove('rotate-180');
+            } else {
+                translatorDropdown.classList.remove('hidden');
+                translatorArrow.classList.add('rotate-180');
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!translatorDropdown.contains(event.target) && !translatorBtn.contains(event.target)) {
+                translatorDropdown.classList.add('hidden');
+                translatorArrow.classList.remove('rotate-180');
+            }
+        });
+
+        document.getElementById('scan-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const target = document.getElementById('target').value;
+            const response = await fetch('/scan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ target })
+            });
+            const data = await response.json();
+            displayResults(data);
+        });
+
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('scan-results');
+            resultsDiv.innerHTML = '';
+            results.forEach(result => {
+                const resultDiv = document.createElement('div');
+                resultDiv.classList.add('card', 'p-4', 'mb-4', 'rounded-xl', 'shadow-lg');
+                resultDiv.innerHTML = `
+                    <h3 class="text-xl font-semibold mb-2 text-white">${result.host}</h3>
+                    <p class="text-gray-400">Status: ${result.status}</p>
+                    <p class="text-gray-400">Open Ports: ${result.openPorts.join(', ')}</p>
+                    <p class="text-gray-400">Operating System: ${result.os}</p>
+                `;
+                resultsDiv.appendChild(resultDiv);
+            });
+        }
+    </script>
+</body>
+</html>
