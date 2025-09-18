@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATCOMIN - Compliance Auditor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome is used for static icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .card {
+            background-color: #2a2a2a;
+            border: 1px solid #4a4a4a;
+        }
+        .icon {
+            color: #46a5ff;
+        }
+        .hamburger {
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 50;
+            transition: transform 0.3s ease;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #f5f5f5;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:first-child {
+            transform: translateY(9px) rotate(45deg);
+        }
+        .hamburger.active span:last-child {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+        .full-screen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 26, 26, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+            z-index: 40;
+        }
+        .full-screen-menu.active {
+            transform: translateX(0);
+        }
+        .audit-result {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .compliant { color: #28a745; }
+        .non-compliant { color: #dc3545; }
+        .attention { color: #ffc107; }
+    </style>
+</head>
+<body class="p-8">
+
+    <!-- Header -->
+    <header class="bg-[#1a1a1a] text-white py-4 px-8">
+        <div class="container mx-auto flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            <a href="/index.html" class="text-3xl font-bold text-white tracking-widest">DATCOMIN</a>
+            <button id="hamburger-button" class="md:hidden flex hamburger">
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="/index.html" class="hover:text-blue-400 hover:underline transition-colors duration-200 font-semibold">Home</a>
+                <a href="/about.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">About</a>
+                <a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Services</a>
+                <a href="/contact.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Contact</a>
+                <a href="/compliance_auditor.html" class="hover:text-blue-400 hover:underline transition-colors duration-200 font-semibold border-b-2 border-blue-400">Tools</a>
+                <!-- Translator Button -->
+                <div class="relative inline-block text-left ml-4">
+                    <button id="translator-button" class="inline-flex justify-center w-full rounded-md px-4 py-2 bg-transparent text-sm font-medium text-white hover:text-blue-400 focus:outline-none transition-colors duration-200">
+                        <i class="fas fa-globe mr-2"></i>
+                        Translate
+                        <i id="translator-arrow" class="fas fa-chevron-down ml-2 transition-transform duration-200 transform"></i>
+                    </button>
+                    <div id="translator-dropdown" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-[#2a2a2a] ring-1 ring-black ring-opacity-5 hidden z-50">
+                        <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-[#4a4a4a] hover:text-white" role="menuitem">English</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-[#4a4a4a] hover:text-white" role="menuitem">Hindi (हिंदी)</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-[#4a4a4a] hover:text-white" role="menuitem">Tamil (தமிழ்)</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Full-screen Mobile Menu -->
+    <div id="full-screen-menu" class="full-screen-menu md:hidden">
+        <nav class="flex flex-col items-center space-y-6 text-2xl font-semibold">
+            <a href="/index.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">Home</a>
+            <a href="/about.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">About</a>
+            <a href="/services.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">Services</a>
+            <a href="/contact.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">Contact</a>
+            <a href="/compliance_auditor.html" class="text-blue-400 hover:underline transition-colors duration-200">Tools</a>
+            <!-- Language links for mobile -->
+            <div class="pt-6">
+                <p class="text-gray-400 text-sm mb-2">Translate:</p>
+                <a href="#" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200 text-base">English</a> |
+                <a href="#" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200 text-base">Hindi (हिंदी)</a> |
+                <a href="#" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200 text-base">Tamil (தமிழ்)</a>
+            </div>
+        </nav>
+    </div>
+
+    <main class="flex-grow py-12">
+        <!-- Main Content Section: Compliance Auditor -->
+        <section class="container mx-auto max-w-5xl text-center py-16 px-4 md:px-0">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-white drop-shadow-md">
+                Compliance Auditor
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
+                Evaluate your organization's data and security practices against key compliance standards with our instant, automated auditor tool.
+            </p>
+        </section>
+
+        <!-- Audit Form Section -->
+        <section class="container mx-auto max-w-3xl py-12 px-4 md:px-0">
+            <div class="card p-8 rounded-xl shadow-lg">
+                <h2 class="text-3xl font-bold mb-6 text-center">Run a Quick Audit</h2>
+                <form id="audit-form" class="space-y-6">
+                    <!-- Data Privacy Section -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-blue-400 mb-4">Data Privacy & Handling</h3>
+                        <p class="text-gray-400 text-sm mb-2">Select the data handling practices your organization follows.</p>
+                        <div class="flex items-center space-x-4 mb-2">
+                            <input type="checkbox" id="data-encryption" name="data-encryption" class="rounded-full text-blue-600 focus:ring-blue-500">
+                            <label for="data-encryption" class="text-gray-200">All data is encrypted in transit and at rest.</label>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <input type="checkbox" id="consent-management" name="consent-management" class="rounded-full text-blue-600 focus:ring-blue-500">
+                            <label for="consent-management" class="text-gray-200">User consent is obtained and documented for data collection.</label>
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-600">
+
+                    <!-- Security Policies Section -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-blue-400 mb-4">Security Policies</h3>
+                        <p class="text-gray-400 text-sm mb-2">Answer the questions about your security protocols.</p>
+                        <div class="mb-4">
+                            <label for="password-policy" class="block text-gray-200 mb-2">Password Policy:</label>
+                            <select id="password-policy" name="password-policy" class="w-full rounded-md bg-[#1a1a1a] text-white border-gray-600 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="strong">Strong (min. 12 chars, special symbols)</option>
+                                <option value="moderate">Moderate (min. 8 chars, mixed case)</option>
+                                <option value="weak">Weak (simple, easily guessable)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="access-control" class="block text-gray-200 mb-2">Access Control:</label>
+                            <select id="access-control" name="access-control" class="w-full rounded-md bg-[#1a1a1a] text-white border-gray-600 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="least-privilege">Principle of Least Privilege is followed</option>
+                                <option value="role-based">Role-based access is implemented</option>
+                                <option value="open-access">Access is open to all employees</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-600">
+
+                    <!-- System & Network Section -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-blue-400 mb-4">System & Network</h3>
+                        <p class="text-gray-400 text-sm mb-2">Describe your system management practices.</p>
+                        <div>
+                            <label for="update-frequency" class="block text-gray-200 mb-2">System Patch & Update Frequency:</label>
+                            <select id="update-frequency" name="update-frequency" class="w-full rounded-md bg-[#1a1a1a] text-white border-gray-600 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="monthly">Monthly</option>
+                                <option value="quarterly">Quarterly</option>
+                                <option value="yearly">Yearly or rarely</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-8">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                            Run Audit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Audit Results Section -->
+        <section id="results-section" class="container mx-auto max-w-3xl py-12 px-4 md:px-0 hidden">
+            <div class="card p-8 rounded-xl shadow-lg audit-result">
+                <h2 class="text-3xl font-bold mb-6 text-center">Audit Report</h2>
+                <div id="result-status" class="text-center font-bold text-2xl mb-4"></div>
+                <div id="result-details" class="space-y-4"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1a1a] text-gray-400 py-12 px-8 mt-12">
+        <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">DATCOMIN</h3>
+                <p class="text-sm">Empowering India's digital future with innovative data and communication solutions.</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Services</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Network Solutions</a></li>
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Cloud & Data Services</a></li>
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Cybersecurity</a></li>
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Managed IT Services</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Careers</a></li>
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Partners</a></li>
+                    <li><a href="/contact.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Support</a></li>
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Case Studies</a></li>
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Legal & Privacy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Follow Us</h3>
+                <div class="flex space-x-4 text-xl">
+                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8 text-sm">
+            &copy; 2025 DATCOMIN. All Rights Reserved.
+        </div>
+    </footer>
+    
+    <script>
+        const hamburgerBtn = document.getElementById('hamburger-button');
+        const fullScreenMenu = document.getElementById('full-screen-menu');
+        const translatorBtn = document.getElementById('translator-button');
+        const translatorDropdown = document.getElementById('translator-dropdown');
+        const translatorArrow = document.getElementById('translator-arrow');
+
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            fullScreenMenu.classList.toggle('active');
+        });
+
+        fullScreenMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('active');
+                fullScreenMenu.classList.remove('active');
+            });
+        });
+
+        translatorBtn.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isDropdownVisible = !translatorDropdown.classList.contains('hidden');
+            if (isDropdownVisible) {
+                translatorDropdown.classList.add('hidden');
+                translatorArrow.classList.remove('rotate-180');
+            } else {
+                translatorDropdown.classList.remove('hidden');
+                translatorArrow.classList.add('rotate-180');
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!translatorDropdown.contains(event.target) && !translatorBtn.contains(event.target)) {
+                translatorDropdown.classList.add('hidden');
+                translatorArrow.classList.remove('rotate-180');
+            }
+        });
+
+        const auditForm = document.getElementById('audit-form');
+        const resultsSection = document.getElementById('results-section');
+        const resultStatus = document.getElementById('result-status');
+        const resultDetails = document.getElementById('result-details');
+
+        auditForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            // Clear previous results
+            resultDetails.innerHTML = '';
+            resultsSection.classList.add('hidden');
+            
+            // Get form values
+            const dataEncryption = document.getElementById('data-encryption').checked;
+            const consentManagement = document.getElementById('consent-management').checked;
+            const passwordPolicy = document.getElementById('password-policy').value;
+            const accessControl = document.getElementById('access-control').value;
+            const updateFrequency = document.getElementById('update-frequency').value;
+
+            let score = 0;
+            let total = 5;
+            let detailsHtml = '';
+
+            // Evaluate each item and build report
+            function checkItem(title, condition, compliantMessage, nonCompliantMessage) {
+                const status = condition ? 'Compliant' : 'Non-Compliant';
+                const color = condition ? 'text-green-400' : 'text-red-400';
+                if (condition) {
+                    score++;
+                }
+                detailsHtml += `
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700 last:border-b-0">
+                        <span class="text-white">${title}</span>
+                        <span class="${color} font-medium">${status}</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">${condition ? compliantMessage : nonCompliantMessage}</p>
+                `;
+            }
+
+            checkItem(
+                'Data Encryption',
+                dataEncryption,
+                'Your data is securely encrypted at all stages.',
+                'Data encryption is not fully implemented. This is a critical vulnerability.'
+            );
+
+            checkItem(
+                'Consent Management',
+                consentManagement,
+                'User consent is properly managed and documented.',
+                'Lack of proper consent management can lead to privacy violations.'
+            );
+
+            checkItem(
+                'Password Policy',
+                passwordPolicy === 'strong',
+                'Your password policy meets strong security standards.',
+                'Your password policy is not strong enough and could be vulnerable.'
+            );
+
+            checkItem(
+                'Access Control',
+                accessControl === 'least-privilege',
+                'Access is granted based on the principle of least privilege.',
+                'Open or role-based access can be a security risk.'
+            );
+
+            checkItem(
+                'System Patching',
+                updateFrequency === 'monthly',
+                'Systems are updated monthly, ensuring timely security patches.',
+                'Infrequent updates leave your systems vulnerable to exploits.'
+            );
+
+            // Determine overall status
+            let overallStatus = '';
+            let statusColor = '';
+            if (score === total) {
+                overallStatus = 'Compliant';
+                statusColor = 'compliant';
+            } else if (score >= total * 0.7) {
+                overallStatus = 'Requires Attention';
+                statusColor = 'attention';
+            } else {
+                overallStatus = 'Non-Compliant';
+                statusColor = 'non-compliant';
+            }
+
+            resultStatus.textContent = overallStatus;
+            resultStatus.className = `text-center font-bold text-3xl mb-4 ${statusColor}`;
+            resultDetails.innerHTML = detailsHtml;
+            resultsSection.classList.remove('hidden');
+            
+            // Scroll to the results section
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATCOMIN - Data & Communication India</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome is used for static icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .card {
+            background-color: #2a2a2a;
+            border: 1px solid #4a4a4a;
+        }
+        .icon {
+            color: #46a5ff;
+        }
+        .hamburger {
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 50;
+            transition: transform 0.3s ease;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #f5f5f5;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:first-child {
+            transform: translateY(9px) rotate(45deg);
+        }
+        .hamburger.active span:last-child {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+        .full-screen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 26, 26, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+            z-index: 40;
+        }
+        .full-screen-menu.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <!-- Header -->
+    <header class="bg-[#1a1a1a] text-white py-4 px-8">
+        <!-- Flex container for the logo, nav, and hamburger. It stacks them vertically on mobile. -->
+        <div class="container mx-auto flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            <a href="/" class="text-3xl font-bold text-white tracking-widest">DATCOMIN</a>
+            <button id="hamburger-button" class="md:hidden flex hamburger">
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="/index.html" class="hover:text-blue-400 hover:underline transition-colors duration-200 font-semibold border-b-2 border-blue-400">Home</a>
+                <a href="/about.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">About</a>
+                <a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Services</a>
+                <a href="/contact.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Contact</a>
+                <!-- Translator Button -->
+                <div class="relative inline-block text-left ml-4">
+                    <button id="translator-button" class="inline-flex justify-center w-full rounded-md px-4 py-2 bg-transparent text-sm font-medium text-white hover:text-blue-400 focus:outline-none transition-colors duration-200">
+                        <i class="fas fa-globe mr-2"></i>
+                        Translate
+                        <i id="translator-arrow" class="fas fa-chevron-down ml-2 transition-transform duration-200 transform"></i>
+                    </button>
+                    <div id="translator-dropdown" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-[#2a2a2a] ring-1 ring-black ring-opacity-5 hidden z-50">
+                        <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-[#4a4a4a] hover:text-white" role="menuitem">English</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-[#4a4a4a] hover:text-white" role="menuitem">Hindi (हिंदी)</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-[#4a4a4a] hover:text-white" role="menuitem">Tamil (தமிழ்)</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Full-screen Mobile Menu -->
+    <div id="full-screen-menu" class="full-screen-menu md:hidden">
+        <nav class="flex flex-col items-center space-y-6 text-2xl font-semibold">
+            <a href="/index.html" class="text-blue-400 hover:underline transition-colors duration-200">Home</a>
+            <a href="/about.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">About</a>
+            <a href="/services.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">Services</a>
+            <a href="/contact.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">Contact</a>
+            <!-- Language links for mobile -->
+            <div class="pt-6">
+                <p class="text-gray-400 text-sm mb-2">Translate:</p>
+                <a href="#" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200 text-base">English</a> |
+                <a href="#" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200 text-base">Hindi (हिंदी)</a> |
+                <a href="#" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200 text-base">Tamil (தமிழ்)</a>
+            </div>
+        </nav>
+    </div>
+
+    <main class="flex-grow py-12">
+        <!-- Hero Section -->
+        <section class="container mx-auto max-w-5xl text-center py-16">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-white drop-shadow-md">
+                Empowering India's Digital Future
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
+                DATCOMIN provides cutting-edge data and communication solutions, helping businesses in India connect, innovate, and grow.
+            </p>
+            <a href="/services.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                Explore Our Services
+            </a>
+        </section>
+
+        <!-- Our Vision Section -->
+        <section class="container mx-auto max-w-5xl py-12 text-center">
+            <h2 class="text-4xl font-bold mb-4">Our Vision for a Connected India</h2>
+            <p class="text-gray-400 text-lg leading-relaxed max-w-3xl mx-auto">
+                At DATCOMIN, our mission is to be the leading force in India's digital transformation. We are dedicated to providing cutting-edge data and communication infrastructure that empowers businesses, bridges the digital divide, and fosters economic growth across the nation. We envision a future where every enterprise, regardless of size, has access to the secure and reliable connectivity needed to innovate, thrive, and compete on the global stage. Our commitment is to build the intelligent backbone that supports this new era of digital excellence.
+            </p>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="container mx-auto max-w-7xl py-12">
+            <h2 class="text-4xl font-bold text-center mb-12">Why Choose DATCOMIN?</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+                <!-- Card 1: Expertise -->
+                <div class="card p-6 md:p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-2">
+                    <i class="fa-solid fa-brain text-6xl icon mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Unmatched Expertise</h3>
+                    <p class="text-gray-400">
+                        Our team of certified professionals brings years of experience in network engineering, cloud architecture, and cybersecurity. We stay ahead of industry trends to provide you with future-proof solutions.
+                    </p>
+                </div>
+                <!-- Card 2: Custom Solutions -->
+                <div class="card p-6 md:p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-2">
+                    <i class="fa-solid fa-puzzle-piece text-6xl icon mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Tailored Solutions</h3>
+                    <p class="text-gray-400">
+                        We don't believe in one-size-fits-all. Every solution we design is meticulously crafted to meet your specific business requirements, ensuring maximum efficiency and return on investment.
+                    </p>
+                </div>
+                <!-- Card 3: 24/7 Support -->
+                <div class="card p-6 md:p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-2">
+                    <i class="fa-solid fa-headset text-6xl icon mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Dedicated Support</h3>
+                    <p class="text-gray-400">
+                        Our commitment to your success extends beyond implementation. We offer 24/7 technical support and proactive maintenance to keep your systems running smoothly.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Our Core Services Section -->
+        <section class="container mx-auto max-w-7xl py-12">
+            <h2 class="text-4xl font-bold text-center mb-12">Our Core Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center md:text-left">
+                <div class="card p-6 rounded-xl shadow-lg">
+                    <i class="fa-solid fa-network-wired text-5xl icon mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Network Solutions</h3>
+                    <p class="text-gray-400 text-sm">Design, deployment, and management of robust and scalable network infrastructure for your business.</p>
+                </div>
+                <div class="card p-6 rounded-xl shadow-lg">
+                    <i class="fa-solid fa-cloud-arrow-up text-5xl icon mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Cloud Services</h3>
+                    <p class="text-gray-400 text-sm">Strategic cloud adoption, migration, and management to enhance flexibility and reduce costs.</p>
+                </div>
+                <div class="card p-6 rounded-xl shadow-lg">
+                    <i class="fa-solid fa-shield-halved text-5xl icon mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Cybersecurity</h3>
+                    <p class="text-gray-400 text-sm">Comprehensive security audits, threat detection, and defense strategies to protect your digital assets.</p>
+                </div>
+                <div class="card p-6 rounded-xl shadow-lg">
+                    <i class="fa-solid fa-handshake-angle text-5xl icon mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Managed IT</h3>
+                    <p class="text-gray-400 text-sm">Full-service IT support and maintenance, allowing you to focus on your core business operations.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Case Studies Section -->
+        <section class="container mx-auto max-w-7xl py-12">
+            <h2 class="text-4xl font-bold text-center mb-12">Our Success Stories</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Case Study Card 1 -->
+                <div class="card p-6 rounded-xl shadow-lg">
+                    <img src="https://placehold.co/400x250/2a2a2a/46a5ff?text=Enterprise+Solution" alt="Enterprise Solution" class="w-full h-auto rounded-lg mb-4">
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Nationwide Network Expansion</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        We partnered with a major logistics company to design and deploy a secure, high-speed network across 50+ locations, significantly improving operational efficiency.
+                    </p>
+                    <a href="#" class="text-blue-400 hover:text-blue-500 font-medium transition-colors duration-200">View Case Study &rarr;</a>
+                </div>
+                <!-- Case Study Card 2 -->
+                <div class="card p-6 rounded-xl shadow-lg">
+                    <img src="https://placehold.co/400x250/2a2a2a/46a5ff?text=Cloud+Migration" alt="Cloud Migration" class="w-full h-auto rounded-lg mb-4">
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Seamless Cloud Migration for a Fintech Startup</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Our team managed a full-scale migration to a public cloud environment, enabling the startup to scale rapidly while reducing their infrastructure costs by 30%.
+                    </p>
+                    <a href="#" class="text-blue-400 hover:text-blue-500 font-medium transition-colors duration-200">View Case Study &rarr;</a>
+                </div>
+                <!-- Case Study Card 3 -->
+                <div class="card p-6 rounded-xl shadow-lg">
+                    <img src="https://placehold.co/400x250/2a2a2a/46a5ff?text=Cyber+Audit" alt="Cyber Audit" class="w-full h-auto rounded-lg mb-4">
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Fortifying Data Security for a Healthcare Provider</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Through a comprehensive cybersecurity audit and implementation of a new security framework, we helped a healthcare provider protect sensitive patient data.
+                    </p>
+                    <a href="#" class="text-blue-400 hover:text-blue-500 font-medium transition-colors duration-200">View Case Study &rarr;</a>
+                </div>
+            </div>
+        </section>
+         
+        <!-- Call to Action Section -->
+        <section class="container mx-auto max-w-5xl py-12 text-center">
+            <div class="bg-blue-600 rounded-xl shadow-lg p-8 md:p-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Transform Your Business?</h2>
+                <p class="text-lg md:text-xl text-white mb-8 max-w-2xl mx-auto">
+                    Connect with our team to discover how our data and communication solutions can drive your success.
+                </p>
+                <a href="/contact.html" class="inline-block bg-white hover:bg-gray-200 text-blue-600 font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                    Get in Touch Today
+                </a>
+            </div>
+        </section>
+         
+
+        <!-- Latest Insights Section -->
+        <section class="container mx-auto max-w-7xl py-12">
+            <h2 class="text-4xl font-bold text-center mb-12">Latest Insights</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post Card 1 -->
+                <div class="card p-6 rounded-xl shadow-lg">
+                    <img src="https://placehold.co/400x250/2a2a2a/46a5ff?text=AI+%26+Cloud" alt="AI in Cloud" class="w-full h-auto rounded-lg mb-4">
+                    <h3 class="text-2xl font-semibold mb-2 text-white">How AI is Reshaping Cloud Computing</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Discover the transformative impact of artificial intelligence on cloud infrastructure, security, and scalability.
+                    </p>
+                    <a href="#" class="text-blue-400 hover:text-blue-500 font-medium transition-colors duration-200">Read More &rarr;</a>
+                </div>
+                <!-- Blog Post Card 2 -->
+                <div class="card p-6 rounded-xl shadow-lg">
+                    <img src="https://placehold.co/400x250/2a2a2a/46a5ff?text=5G+Networks" alt="5G Networks" class="w-full h-auto rounded-lg mb-4">
+                    <h3 class="text-2xl font-semibold mb-2 text-white">The Rise of 5G: A New Era for Businesses</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Learn how the next generation of wireless technology is empowering businesses with unprecedented speed and connectivity.
+                    </p>
+                    <a href="#" class="text-blue-400 hover:text-blue-500 font-medium transition-colors duration-200">Read More &rarr;</a>
+                </div>
+                <!-- Blog Post Card 3 -->
+                <div class="card p-6 rounded-xl shadow-lg">
+                    <img src="https://placehold.co/400x250/2a2a2a/46a5ff?text=Data+Security" alt="Data Security" class="w-full h-auto rounded-lg mb-4">
+                    <h3 class="text-2xl font-semibold mb-2 text-white">Protecting Your Data: Best Practices</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        A guide to essential data security practices and tools to safeguard your company's most valuable information.
+                    </p>
+                    <a href="#" class="text-blue-400 hover:text-blue-500 font-medium transition-colors duration-200">Read More &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Client Testimonials Section -->
+        <section class="container mx-auto max-w-5xl py-12">
+            <h2 class="text-4xl font-bold text-center mb-12">What Our Clients Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Testimonial Card 1 -->
+                <div class="card p-8 rounded-xl shadow-lg">
+                    <p class="text-lg italic text-gray-300 mb-4">
+                        "DATCOMIN's network solutions transformed our operations. We saw a significant increase in efficiency and reliability almost immediately. Their team was professional and a pleasure to work with."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/60x60/2a2a2a/f5f5f5?text=AV" alt="Avatar" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-white">Anand Verma</p>
+                            <p class="text-sm text-gray-400">CEO, Tech Innovators Pvt. Ltd.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial Card 2 -->
+                <div class="card p-8 rounded-xl shadow-lg">
+                    <p class="text-lg italic text-gray-300 mb-4">
+                        "The cybersecurity audit from DATCOMIN gave us peace of mind. They identified vulnerabilities we didn't even know we had and provided clear, actionable steps to secure our data. Highly recommended."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/60x60/2a2a2a/f5f5f5?text=SM" alt="Avatar" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-white">Sunita Mehta</p>
+                            <p class="text-sm text-gray-400">Founder, E-Commerce Solutions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1a1a] text-gray-400 py-12 px-8 mt-12">
+        <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">DATCOMIN</h3>
+                <p class="text-sm">Empowering India's digital future with innovative data and communication solutions.</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Services</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Network Solutions</a></li>
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Cloud & Data Services</a></li>
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Cybersecurity</a></li>
+                    <li><a href="/services.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Managed IT Services</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Careers</a></li>
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Partners</a></li>
+                    <li><a href="/contact.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Support</a></li>
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Case Studies</a></li>
+                    <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Legal & Privacy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Follow Us</h3>
+                <div class="flex space-x-4 text-xl">
+                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8 text-sm">
+            &copy; 2025 DATCOMIN. All Rights Reserved.
+        </div>
+    </footer>
+    
+    <script>
+        const hamburgerBtn = document.getElementById('hamburger-button');
+        const fullScreenMenu = document.getElementById('full-screen-menu');
+        const translatorBtn = document.getElementById('translator-button');
+        const translatorDropdown = document.getElementById('translator-dropdown');
+        const translatorArrow = document.getElementById('translator-arrow');
+
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            fullScreenMenu.classList.toggle('active');
+        });
+
+        fullScreenMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('active');
+                fullScreenMenu.classList.remove('active');
+            });
+        });
+
+        translatorBtn.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isDropdownVisible = !translatorDropdown.classList.contains('hidden');
+            if (isDropdownVisible) {
+                translatorDropdown.classList.add('hidden');
+                translatorArrow.classList.remove('rotate-180');
+            } else {
+                translatorDropdown.classList.remove('hidden');
+                translatorArrow.classList.add('rotate-180');
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!translatorDropdown.contains(event.target) && !translatorBtn.contains(event.target)) {
+                translatorDropdown.classList.add('hidden');
+                translatorArrow.classList.remove('rotate-180');
+            }
+        });
+
+    </script>
+</body>
+</html>
