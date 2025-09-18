@@ -149,7 +149,8 @@ def scan():
     nm = nmap.PortScanner()
 
     try:
-        nm.scan(target, '1-1024', arguments="-O")  # OS detection requires -O
+        # safer: remove -O because it requires root privileges
+        nm.scan(target, '1-1024')  
     except Exception as e:
         return jsonify({'error': f'Failed to scan target: {e}'}), 500
 
@@ -166,7 +167,12 @@ def scan():
             'os': os_family
         }
         results.append(result)
+
+    if not results:  # no hosts found
+        return jsonify({'error': 'No hosts found or target unreachable'}), 404
+
     return jsonify(results)
+
 
 
 if __name__ == '__main__':
