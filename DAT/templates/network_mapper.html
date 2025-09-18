@@ -6,7 +6,8 @@
     <title>DATCOMIN Network Mapper</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome is used for static icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -70,10 +71,9 @@
 
     <!-- Header -->
     <header class="bg-[#1a1a1a] text-white py-4 px-8">
-        <!-- Flex container for the logo, nav, and hamburger. It stacks them vertically on mobile. -->
         <div class="container mx-auto flex flex-col md:flex-row md:justify-between md:items-center gap-4">
             <a href="/" class="text-3xl font-bold text-white tracking-widest">DATCOMIN Network Mapper</a>
-            <button id="hamburger-button" class="md:hidden flex hamburger">
+            <button id="hamburger-button" class="md:hidden flex hamburger" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
             </button>
@@ -87,7 +87,7 @@
                     <button id="translator-button" class="inline-flex justify-center w-full rounded-md px-4 py-2 bg-transparent text-sm font-medium text-white hover:text-blue-400 focus:outline-none transition-colors duration-200">
                         <i class="fas fa-globe mr-2"></i>
                         Translate
-                        <i id="translator-arrow" class="fas fa-chevron-down ml-2 transition-transform duration-200 transform"></i>
+                        <i id="translator-arrow" class="fas fa-chevron-down ml-2 transition-transform duration-200"></i>
                     </button>
                     <div id="translator-dropdown" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-[#2a2a2a] ring-1 ring-black ring-opacity-5 hidden z-50">
                         <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
@@ -108,7 +108,6 @@
             <a href="/about.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">About</a>
             <a href="/services.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">Services</a>
             <a href="/contact.html" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200">Contact</a>
-            <!-- Language links for mobile -->
             <div class="pt-6">
                 <p class="text-gray-400 text-sm mb-2">Translate:</p>
                 <a href="#" class="text-white hover:text-blue-400 hover:underline transition-colors duration-200 text-base">English</a> |
@@ -119,7 +118,6 @@
     </div>
 
     <main class="flex-grow py-12">
-        <!-- Hero Section -->
         <section class="container mx-auto max-w-5xl text-center py-16">
             <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-white drop-shadow-md">
                 DATCOMIN Network Mapper
@@ -129,14 +127,13 @@
             </p>
         </section>
 
-        <!-- Network Mapper Section -->
         <section class="container mx-auto max-w-5xl py-12">
             <h2 class="text-4xl font-bold text-center mb-8">Scan a Network</h2>
             <div class="card p-6 rounded-xl shadow-lg">
                 <form id="scan-form">
                     <div class="mb-4">
                         <label for="target" class="block text-white text-sm font-bold mb-2">Target IP/Range:</label>
-                        <input type="text" id="target" class="w-full p-2 rounded-md" required>
+                        <input type="text" id="target" class="w-full p-2 rounded-md text-black" required>
                     </div>
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Scan</button>
                 </form>
@@ -166,7 +163,7 @@
                 <ul class="space-y-2 text-sm">
                     <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Careers</a></li>
                     <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Partners</a></li>
-                    <li><a href="/contact" class="hover:text-blue-400 hover:underline transition-colors duration-200">Support</a></li>
+                    <li><a href="/contact.html" class="hover:text-blue-400 hover:underline transition-colors duration-200">Support</a></li>
                     <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Case Studies</a></li>
                     <li><a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200">Legal & Privacy</a></li>
                 </ul>
@@ -175,7 +172,7 @@
                 <h3 class="text-lg font-semibold text-white mb-4">Follow Us</h3>
                 <div class="flex space-x-4 text-xl">
                     <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fa-brands fa-x-twitter"></i></a>
                     <a href="#" class="hover:text-blue-400 hover:underline transition-colors duration-200"><i class="fab fa-github"></i></a>
                 </div>
             </div>
@@ -226,15 +223,18 @@
         document.getElementById('scan-form').addEventListener('submit', async (event) => {
             event.preventDefault();
             const target = document.getElementById('target').value;
-            const response = await fetch('/scan', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ target })
-            });
-            const data = await response.json();
-            displayResults(data);
+            try {
+                const response = await fetch('/scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target })
+                });
+                const data = await response.json();
+                displayResults(data);
+            } catch (error) {
+                document.getElementById('scan-results').innerHTML =
+                    '<p class="text-red-500">Error fetching scan results.</p>';
+            }
         });
 
         function displayResults(results) {
@@ -246,8 +246,8 @@
                 resultDiv.innerHTML = `
                     <h3 class="text-xl font-semibold mb-2 text-white">${result.host}</h3>
                     <p class="text-gray-400">Status: ${result.status}</p>
-                    <p class="text-gray-400">Open Ports: ${result.openPorts.join(', ')}</p>
-                    <p class="text-gray-400">Operating System: ${result.os}</p>
+                    <p class="text-gray-400">Open Ports: ${Array.isArray(result.openPorts) ? result.openPorts.join(', ') : 'N/A'}</p>
+                    <p class="text-gray-400">Operating System: ${result.os || 'Unknown'}</p>
                 `;
                 resultsDiv.appendChild(resultDiv);
             });
